@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">JFoot</string>
+
+    <!-- Utils String -->
+    <string name="default_image_description">JFoot image</string>
+    <string name="default_image_title_description">JFoot image title</string>
+    <string name="default_image_next_button_description">Next Button</string>
+    <string name="match_item_image_description">match item image description</string>
+    <string name="error_unknown_error">Une erreur est apparue</string>
+    <string name="error_no_internet">internet est requis</string>
+    <string name="error_authentication_canceled">L\'authentification à était annulé</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <!-- Utils String End -->
+
+    <!-- Login String -->
+    <string name="connexion_by_mail">Connexion Avec Email</string>
+    <string name="connexion_by_google">Connexion Avec Google</string>
+    <string name="error_occurred">Désolé une erreur est survenue</string>
+    <!-- Login String End -->
+
+    <!-- Top Match array -->
+    <string-array name="top_match_query">
+        <item>Marseille</item>
+        <item>PSG</item>
+        <item>Lyon</item>
+        <item>AS Monaco</item>
+        <item>Liverpool</item>
+        <item>Arsenal</item>
+        <item>Manchester City</item>
+        <item>Manchester United</item>
+        <item>Inter Milan</item>
+        <item>Milan AC</item>
+        <item>Juventus</item>
+        <item>Barcelona</item>
+        <item>Real Madrid</item>
+        <item>Atletico Madrid</item>
+        <item>Bayern Munich</item>
+        <item>Borussia Dortmund</item>
+    </string-array>
+    <!-- Top Match array End -->
+
+    <!-- Home String -->
+    <string name="top_matchs">Top Matchs</string>
+    <string name="matchs">Matchs</string>
+    <!-- Home String End -->
+
+    <!-- Matches List String -->
+    <string name="nothing_found_message">Désolé aucun match trouvé</string>
+    <!-- Matches List String End -->
+
+    <!-- Matches Item String -->
+    <string name="vs">vs</string>
+    <!-- Matches Item String End -->
+
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/ligue_1"
+            android:enabled="true"
+            android:icon="@drawable/ic_ligue_1"
+            android:title="Ligue 1"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/premier_league"
+            android:enabled="true"
+            android:icon="@drawable/ic_premier_league"
+            android:title="Premier League"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/liga"
+            android:enabled="true"
+            android:icon="@drawable/ic_liga"
+            android:title="Liga"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/serie_a"
+            android:enabled="true"
+            android:icon="@drawable/ic_serie_a"
+            android:title="Serie A"
+            app:showAsAction="ifRoom" />
+
+
+    <item
+            android:id="@+id/logout"
+            android:enabled="true"
+            android:icon="@drawable/ic_logout"
+            android:title="Déconnexion"
+            app:showAsAction="ifRoom" />
+
+</menu>

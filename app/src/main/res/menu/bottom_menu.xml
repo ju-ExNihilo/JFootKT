@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/homeFragment2"
+            android:enabled="true"
+            android:icon="@drawable/ic_home"
+            android:title="Accueil"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/liveFragment"
+            android:enabled="true"
+            android:icon="@drawable/ic_live"
+            android:title="Scores"
+            app:showAsAction="ifRoom" />
+
+    <item
+            android:id="@+id/messagerie"
+            android:enabled="true"
+            android:icon="@drawable/outline_forum"
+            android:title="Conversation"
+            app:showAsAction="ifRoom" />
+
+</menu>

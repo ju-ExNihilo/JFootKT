@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/match_item_home_width"
+            android:layout_height="@dimen/match_item_home_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/match_item_home_margin"
+            android:layout_marginBottom="@dimen/match_item_home_margin"
+            android:layout_marginEnd="@dimen/match_item_home_margin"
+            app:cardCornerRadius="@dimen/match_item_home_radius"
+            app:cardElevation="@dimen/match_item_home_elevation">
+
+        <ImageView
+                android:id="@+id/match_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/login7"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/match_item_image_description"/>
+        <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grayTransparent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:id="@+id/dom_team"
+                    tools:text="TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/vs_text_view"
+                    android:layout_marginTop="@dimen/dom_team_margin_top"
+                    style="@style/MatchItemTextView"/>
+
+            <TextView
+                    android:id="@+id/vs_text_view"
+                    android:text="@string/vs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/dom_team"
+                    app:layout_constraintBottom_toTopOf="@+id/ext_team"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/MatchItemTextView"/>
+
+            <TextView
+                    android:id="@+id/ext_team"
+                    tools:text="TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/vs_text_view"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="@dimen/ext_team_margin_bottom"
+                    style="@style/MatchItemTextView"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
