@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.models.Match
+import com.jgdeveloppement.jg_foot.utils.Utils
 
 class MatchAdapter(private val context: HomeActivity,
                    private val matchesList: List<Match>,
                    private val layoutId: Int,
-                   private val onCardMenuClicked: OnCardMatchClicked)
+                   private val onCardMatchClicked: OnCardMatchClicked)
     : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
 
     interface OnCardMatchClicked{
-        fun onClickedMatch(cardName: String)
+        fun onClickedMatch(matchUrl: String, matchTitle: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,6 +33,8 @@ class MatchAdapter(private val context: HomeActivity,
         holder.domTeam.text = match.side1.name
         holder.extTeam.text = match.side2.name
         Glide.with(context).load(Uri.parse(match.thumbnail)).into(holder.matchImage)
+
+        holder.itemView.setOnClickListener { onCardMatchClicked.onClickedMatch(Utils.getUrl(match.embed), match.title) }
     }
 
     override fun getItemCount(): Int = matchesList.size

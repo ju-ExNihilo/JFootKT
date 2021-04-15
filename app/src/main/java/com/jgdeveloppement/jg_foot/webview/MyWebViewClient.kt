@@ -1,4 +1,4 @@
-package com.jgdeveloppement.jg_foot.livescore
+package com.jgdeveloppement.jg_foot.webview
 
 import android.content.Context
 import android.content.Intent

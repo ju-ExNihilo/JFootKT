@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.FragmentHomeBinding
+import com.jgdeveloppement.jg_foot.details.DetailsActivity
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Match
 import com.jgdeveloppement.jg_foot.utils.Status
@@ -52,7 +54,10 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     override fun onResume() {
         super.onResume()
         val navigationView = (activity as AppCompatActivity?)!!.findViewById<NavigationView>(R.id.nav_view)
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         Utils.setSelectedNavigationItem(4, navigationView)
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
+        bottomNavigationView.menu.getItem(0).isChecked = true
     }
 
     private fun setupViewModel() {
@@ -90,8 +95,8 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         binding.otherMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, allMatch, R.layout.match_item, this)
     }
 
-    override fun onClickedMatch(cardName: String) {
-
+    override fun onClickedMatch(matchUrl: String, matchTitle: String) {
+        DetailsActivity.navigate(activity, matchUrl, matchTitle)
     }
 
 }

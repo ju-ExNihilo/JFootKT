@@ -5,21 +5,21 @@
             android:id="@+id/homeFragment2"
             android:enabled="true"
             android:icon="@drawable/ic_home"
-            android:title="Accueil"
+            android:title="@string/accueil"
             app:showAsAction="ifRoom" />
 
     <item
             android:id="@+id/liveFragment"
             android:enabled="true"
             android:icon="@drawable/ic_live"
-            android:title="Scores"
+            android:title="@string/scores"
             app:showAsAction="ifRoom" />
 
     <item
-            android:id="@+id/messagerie"
+            android:id="@+id/messageFragment"
             android:enabled="true"
             android:icon="@drawable/outline_forum"
-            android:title="Conversation"
+            android:title="@string/conversation"
             app:showAsAction="ifRoom" />
 
 </menu>

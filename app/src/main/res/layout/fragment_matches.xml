@@ -62,14 +62,15 @@
 
                         <ImageView
                                 android:id="@+id/matches_image"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/default_top_image_height"
                                 app:srcCompat="@drawable/login7"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:scaleType="fitXY"
                                 android:background="@color/colorTransparent"
+                                android:alpha="0.8"
+                                android:adjustViewBounds="true"
                                 android:contentDescription="@string/default_image_description"/>
 
                         <ImageView

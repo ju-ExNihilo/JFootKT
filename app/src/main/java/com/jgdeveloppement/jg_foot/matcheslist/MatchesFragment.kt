@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.FragmentMatchesBinding
+import com.jgdeveloppement.jg_foot.details.DetailsActivity
 import com.jgdeveloppement.jg_foot.home.HomeActivity
 import com.jgdeveloppement.jg_foot.home.MatchAdapter
 import com.jgdeveloppement.jg_foot.injection.Injection
@@ -44,8 +46,6 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        val slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up)
-        binding.matchesRecyclerView.animation = slideUp
         setupViewModel()
         setHasOptionsMenu(true)
         if (arguments != null){
@@ -60,7 +60,11 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, false)
+    }
 
     private fun setupViewModel() {
         matchViewModel = ViewModelProviders.of(this, Injection.provideMatchViewModelFactory()).get(MatchViewModel::class.java)
@@ -123,6 +127,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     private fun initLayout(title: String, drawableId: Int, matches: List<Match>){
         if (matches.isNotEmpty()){
+            val slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up)
+            binding.matchesRecyclerView.animation = slideUp
             binding.matchesRecyclerView.visibility = View.VISIBLE
             binding.errorTextView.visibility = View.GONE
             binding.matchesTitle.text = title
@@ -145,8 +151,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         Utils.setSelectedNavigationItem(index, navigationView)
     }
 
-    override fun onClickedMatch(cardName: String) {
-
+    override fun onClickedMatch(matchUrl: String, matchTitle: String) {
+        DetailsActivity.navigate(activity, matchUrl, matchTitle)
     }
 
 }

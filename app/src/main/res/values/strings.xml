@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">JFoot</string>
+    <string name="app_no_name"/>
 
     <!-- Utils String -->
     <string name="default_image_description">JFoot image</string>
@@ -52,5 +53,19 @@
     <!-- Matches Item String -->
     <string name="vs">vs</string>
     <!-- Matches Item String End -->
+
+    <!-- Details String -->
+    <string name="commentaires">Commentaires</string>
+    <!-- Details String End -->
+
+    <!-- Message String -->
+    <string name="mes_conversations">Mes Conversations</string>
+    <!-- Message String End -->
+
+    <!-- Bottom Nav String -->
+    <string name="accueil">Accueil</string>
+    <string name="scores">Scores</string>
+    <string name="conversation">Conversation</string>
+    <!-- Bottom Nav String End -->
 
 </resources>

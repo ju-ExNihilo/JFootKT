@@ -4,11 +4,15 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 object Utils {
     const val RC_SIGN_IN = 123
+    const val RC_MATCH_URL = "RC_MATCH_URL"
+    const val RC_MATCH_TITLE = "RC_MATCH_TITLE"
     const val RC_FROM = "RC_FROM"
     const val TOP_MATCHES = "TOP_MATCHES"
     const val ALL_MATCHES = "ALL_MATCHES"
@@ -22,33 +26,37 @@ object Utils {
         Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun isConnected(callback : (ok: Boolean)->Unit){
+    fun isConnected(callback: (ok: Boolean) -> Unit){
         val command = "ping -c 1 google.com"
         val ping = Runtime.getRuntime().exec(command).waitFor()
         if (ping == 0) callback(true) else callback(false)
     }
 
+    fun unSelectBottomNavigationItem(bottomNavigationView: BottomNavigationView, isCheckable: Boolean){
+        bottomNavigationView.menu.setGroupCheckable(0, isCheckable, true)
+    }
+
     fun setSelectedNavigationItem(id: Int, navigationView: NavigationView){
         when (id){
-            0 ->{
+            0 -> {
                 navigationView.menu.getItem(0).isChecked = true
                 navigationView.menu.getItem(1).isChecked = false
                 navigationView.menu.getItem(2).isChecked = false
                 navigationView.menu.getItem(3).isChecked = false
             }
-            1 ->{
+            1 -> {
                 navigationView.menu.getItem(0).isChecked = false
                 navigationView.menu.getItem(1).isChecked = true
                 navigationView.menu.getItem(2).isChecked = false
                 navigationView.menu.getItem(3).isChecked = false
             }
-            2 ->{
+            2 -> {
                 navigationView.menu.getItem(0).isChecked = false
                 navigationView.menu.getItem(1).isChecked = false
                 navigationView.menu.getItem(2).isChecked = true
                 navigationView.menu.getItem(3).isChecked = false
             }
-            3 ->{
+            3 -> {
                 navigationView.menu.getItem(0).isChecked = false
                 navigationView.menu.getItem(1).isChecked = false
                 navigationView.menu.getItem(2).isChecked = false
@@ -66,5 +74,16 @@ object Utils {
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun getUrl(string: String): String {
+        var result = ""
+        val regex = "https[^\"]*frameborder"
+        val scan = Scanner(string)
+        val find: String? = scan.findInLine(regex)
+        if (find != null) {
+            result = find.substring(0, find.length - 13)
+        }
+        return result
     }
 }

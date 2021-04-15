@@ -63,4 +63,9 @@
     <dimen name="nav_header_height">450dp</dimen>
     <!-- Nav Header Layout End -->
 
+    <!-- Details Layout -->
+    <dimen name="details_title_text_size">18sp</dimen>
+    <dimen name="details_ball_image_view_size">30dp</dimen>
+    <!-- Details Layout End -->
+
 </resources>
