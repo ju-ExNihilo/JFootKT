@@ -1,19 +1,19 @@
 package com.jgdeveloppement.jg_foot.injection
 
 import com.jgdeveloppement.jg_foot.factory.ViewModelFactory
-import com.jgdeveloppement.jg_foot.repository.MatchRepository
+import com.jgdeveloppement.jg_foot.repository.MainRepository
 import com.jgdeveloppement.jg_foot.retrofit.ApiHelper
 import com.jgdeveloppement.jg_foot.retrofit.RetrofitBuilder
 
 object Injection {
 
-    private fun provideMatchRepository() : MatchRepository{
+    private fun provideMainRepository() : MainRepository{
         val apiHelper = ApiHelper(RetrofitBuilder.apiService)
-        return MatchRepository(apiHelper)
+        return MainRepository(apiHelper)
     }
 
-    fun provideMatchViewModelFactory() : ViewModelFactory {
-        val matchRepository = provideMatchRepository()
-        return ViewModelFactory(matchRepository)
+    fun provideMainViewModelFactory() : ViewModelFactory {
+        val mainRepository = provideMainRepository()
+        return ViewModelFactory(mainRepository)
     }
 }

@@ -19,17 +19,17 @@ import com.jgdeveloppement.jg_foot.details.DetailsActivity
 import com.jgdeveloppement.jg_foot.home.HomeActivity
 import com.jgdeveloppement.jg_foot.home.MatchAdapter
 import com.jgdeveloppement.jg_foot.injection.Injection
-import com.jgdeveloppement.jg_foot.models.Match
+import com.jgdeveloppement.jg_foot.models.match.Match
 import com.jgdeveloppement.jg_foot.utils.Status
 import com.jgdeveloppement.jg_foot.utils.Utils
-import com.jgdeveloppement.jg_foot.viewmodel.MatchViewModel
+import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 
 
 class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     private var _binding: FragmentMatchesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var matchViewModel: MatchViewModel
+    private lateinit var mainViewModel: MainViewModel
     private var from: String? = null
     private var navController: NavController? = null
 
@@ -67,11 +67,11 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     }
 
     private fun setupViewModel() {
-        matchViewModel = ViewModelProviders.of(this, Injection.provideMatchViewModelFactory()).get(MatchViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this, Injection.provideMainViewModelFactory()).get(MainViewModel::class.java)
     }
 
     private fun initMatches(){
-        matchViewModel.getAllMatches().observe(viewLifecycleOwner, {
+        mainViewModel.getAllMatches().observe(viewLifecycleOwner, {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {

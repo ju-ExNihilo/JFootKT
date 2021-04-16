@@ -7,28 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.FragmentHomeBinding
 import com.jgdeveloppement.jg_foot.details.DetailsActivity
 import com.jgdeveloppement.jg_foot.injection.Injection
-import com.jgdeveloppement.jg_foot.models.Match
+import com.jgdeveloppement.jg_foot.models.User
+import com.jgdeveloppement.jg_foot.models.match.Match
 import com.jgdeveloppement.jg_foot.utils.Status
 import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.ALL_MATCHES
 import com.jgdeveloppement.jg_foot.utils.Utils.TOP_MATCHES
-import com.jgdeveloppement.jg_foot.viewmodel.MatchViewModel
+import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 
 class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var matchViewModel: MatchViewModel
+    private lateinit var mainViewModel: MainViewModel
     private var navController: NavController? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -61,11 +64,11 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     }
 
     private fun setupViewModel() {
-        matchViewModel = ViewModelProviders.of(this, Injection.provideMatchViewModelFactory()).get(MatchViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this, Injection.provideMainViewModelFactory()).get(MainViewModel::class.java)
     }
 
     private fun initMatches(){
-        matchViewModel.getAllMatches().observe(viewLifecycleOwner, {
+        mainViewModel.getAllMatches().observe(viewLifecycleOwner, {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {

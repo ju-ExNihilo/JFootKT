@@ -8,24 +8,31 @@ import android.os.Handler
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityLoginBinding
 import com.jgdeveloppement.jg_foot.home.HomeActivity
+import com.jgdeveloppement.jg_foot.injection.Injection
+import com.jgdeveloppement.jg_foot.models.User
 import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_SIGN_IN
+import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         onClickEmailLoginButton()
         onClickGoogleLoginButton()
     }
@@ -35,12 +42,17 @@ class LoginActivity : AppCompatActivity() {
         rooting()
     }
 
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProviders.of(this, Injection.provideMainViewModelFactory()).get(MainViewModel::class.java)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         loginLayout(true)
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
+                insertUserToFirebase(FirebaseAuth.getInstance().currentUser)
                 HomeActivity.navigate(this)
             }else{
                 when (response?.error?.errorCode) {
@@ -84,6 +96,17 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButtonMail.setOnClickListener {
             startSignInActivity(AuthUI.IdpConfig.EmailBuilder().build())
         }
+    }
+
+    private fun insertUserToFirebase(currentUser: FirebaseUser?) {
+        if (currentUser != null){
+            val id = currentUser.uid
+            val name = if (currentUser.displayName != null) currentUser.displayName else "none"
+            val avatarUrl = if (currentUser.photoUrl != null) currentUser.photoUrl.toString() else "none"
+            val user = User(id, name , avatarUrl)
+            mainViewModel.addUser(user)
+        }
+
     }
 
     /** Login with FirebaseUI  */

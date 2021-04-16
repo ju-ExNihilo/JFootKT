@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jgdeveloppement.jg_foot.R
-import com.jgdeveloppement.jg_foot.models.Match
+import com.jgdeveloppement.jg_foot.models.match.Match
 import com.jgdeveloppement.jg_foot.utils.Utils
 
 class MatchAdapter(private val context: HomeActivity,

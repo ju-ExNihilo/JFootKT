@@ -154,6 +154,51 @@
                             android:textSize="@dimen/match_title_land_text_size"
                             style="@style/TitleDetailsStyle"/>
 
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/comment_recycler_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintTop_toBottomOf="@+id/message_title"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/recycler_view_margin_top"
+                            tools:listitem="@layout/comment_item"/>
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/add_floating_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            app:srcCompat="@drawable/ic_comment"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/message_title"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintTop_toTopOf="@+id/message_title"
+                            android:focusable="true"/>
+
+                    <!-- You must wrap transform view in Circular reveal container -->
+                    <io.codetail.widget.RevealFrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            app:layout_constraintBottom_toBottomOf="@+id/add_floating_button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:elevation="30dp"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                        <!-- Transform view -->
+                        <Toolbar
+                                android:id="@+id/toolbar_footer"
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                android:background="@color/colorWhite"
+                                android:visibility="invisible">
+                            <!-- Put view you like -->
+                        </Toolbar>
+                    </io.codetail.widget.RevealFrameLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
