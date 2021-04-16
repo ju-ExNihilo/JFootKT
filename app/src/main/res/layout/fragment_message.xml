@@ -14,7 +14,7 @@
 
             <!-- Loading panel -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/details_progress_layout"
+                    android:id="@+id/message_progress_layout"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:visibility="gone"
@@ -39,7 +39,7 @@
             <!-- Loading panel -->
 
             <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/details_default_card"
+                    android:id="@+id/message_default_card"
                     style="@style/CustomTopCardViewStyle"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,24 +60,24 @@
                             android:paddingBottom="80dp">
 
                             <ImageView
-                                    android:id="@+id/details_image"
+                                    android:id="@+id/message_image"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/default_top_image_height"
-                                    app:srcCompat="@drawable/login7"
+                                    app:srcCompat="@drawable/card_image"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    android:background="@color/colorTransparent"
+                                    android:background="@color/colorWhite"
                                     android:alpha="0.8"
                                     android:adjustViewBounds="true"
                                     android:contentDescription="@string/default_image_description"/>
 
                             <ImageView
-                                    android:id="@+id/details_title_image"
+                                    android:id="@+id/message_title_image"
                                     android:src="@drawable/outline_forum"
                                     android:layout_width="@dimen/ball_image_view_size"
                                     android:layout_height="@dimen/ball_image_view_size"
-                                    app:layout_constraintTop_toBottomOf="@+id/details_image"
+                                    app:layout_constraintTop_toBottomOf="@+id/message_image"
                                     app:layout_constraintStart_toStartOf="parent"
                                     android:layout_marginStart="@dimen/default_image_title_margin_start"
                                     android:layout_marginTop="@dimen/default_image_title_margin_top"
@@ -85,15 +85,15 @@
                                     android:contentDescription="@string/default_image_title_description"/>
 
                             <TextView
-                                    android:id="@+id/details_title"
+                                    android:id="@+id/message_title"
                                     android:text="@string/mes_conversations"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:layout_constraintTop_toTopOf="@+id/details_title_image"
-                                    app:layout_constraintBottom_toBottomOf="@+id/details_title_image"
-                                    app:layout_constraintStart_toEndOf="@+id/details_title_image"
+                                    app:layout_constraintTop_toTopOf="@+id/message_title_image"
+                                    app:layout_constraintBottom_toBottomOf="@+id/message_title_image"
+                                    app:layout_constraintStart_toEndOf="@+id/message_title_image"
                                     style="@style/TitleDefaultStyle"
-                                    android:textSize="24sp"/>
+                                    android:textSize="@dimen/message_title_text_size"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

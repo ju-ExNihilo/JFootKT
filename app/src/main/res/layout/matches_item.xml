@@ -23,7 +23,7 @@
                 android:id="@+id/match_item_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/login7"
+                app:srcCompat="@drawable/card_image"
                 android:scaleType="fitXY"
                 android:contentDescription="@string/match_item_image_description"/>
         <View

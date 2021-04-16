@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityDetailsBinding
+import com.jgdeveloppement.jg_foot.home.HomeActivity
 import com.jgdeveloppement.jg_foot.webview.MyWebViewClient
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_TITLE
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_URL
@@ -40,7 +42,6 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initToolbar(){
         setSupportActionBar(binding.toolbarDetails)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -54,6 +55,7 @@ class DetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
     companion object {
         /** Used to navigate to this activity  */
         fun navigate(activity: FragmentActivity?, matchUrl: String, matchTitle: String) {
@@ -61,7 +63,6 @@ class DetailsActivity : AppCompatActivity() {
             intent.putExtra(RC_MATCH_URL, matchUrl)
             intent.putExtra(RC_MATCH_TITLE, matchTitle)
             ActivityCompat.startActivity(activity!!, intent, null)
-
         }
 
     }

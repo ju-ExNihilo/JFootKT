@@ -89,11 +89,11 @@
                             android:id="@+id/details_image"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/default_top_image_height"
-                            app:srcCompat="@drawable/login7"
+                            app:srcCompat="@drawable/card_image"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:background="@color/colorTransparent"
+                            android:background="@color/colorWhite"
                             android:alpha="0.8"
                             android:adjustViewBounds="true"
                             android:contentDescription="@string/default_image_description"/>
@@ -120,7 +120,7 @@
                             app:layout_constraintStart_toEndOf="@+id/details_match_image"
                             app:layout_constraintEnd_toEndOf="parent"
                             style="@style/TitleDetailsStyle"
-                            android:textSize="30sp"
+                            android:textSize="@dimen/match_title_land_text_size"
                             android:layout_marginTop="4dp"/>
 
                     <WebView
@@ -130,7 +130,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/details_match_image"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:layout_marginTop="24dp"/>
+                            android:layout_marginTop="@dimen/details_web_view_margin_top"/>
 
                     <ImageView
                             android:id="@+id/message_image"
@@ -151,7 +151,7 @@
                             app:layout_constraintTop_toTopOf="@+id/message_image"
                             app:layout_constraintBottom_toBottomOf="@+id/message_image"
                             app:layout_constraintStart_toEndOf="@+id/message_image"
-                            android:textSize="30sp"
+                            android:textSize="@dimen/match_title_land_text_size"
                             style="@style/TitleDetailsStyle"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
