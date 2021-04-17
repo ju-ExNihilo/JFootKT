@@ -81,6 +81,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginStart="@dimen/default_image_title_margin_start"
                                 android:layout_marginTop="@dimen/default_image_title_margin_top"
+                                android:tint="@color/colorGold"
                                 android:backgroundTint="@color/colorTransparent"
                                 android:contentDescription="@string/default_image_title_description"/>
 

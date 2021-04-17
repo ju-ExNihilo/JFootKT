@@ -81,9 +81,9 @@
         <item name="android:textSize">@dimen/default_title_text_size</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_marginStart">@dimen/default_title_margin_start</item>
-        <item name="android:shadowColor">@color/colorPrimaryDark</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowColor">@color/colorPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:textColor">@color/colorGray</item>
         <item name="android:textStyle">bold</item>
@@ -91,9 +91,9 @@
 
     <style name="TitleDetailsStyle">
         <item name="android:layout_marginStart">@dimen/default_title_margin_start</item>
-        <item name="android:shadowColor">@color/colorPrimaryDark</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowColor">@color/colorPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:textColor">@color/colorGray</item>
         <item name="android:textStyle">bold</item>

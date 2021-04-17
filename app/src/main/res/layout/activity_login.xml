@@ -87,10 +87,10 @@
                         android:textStyle="bold"
                         android:textColor="@color/colorGray"
                         android:textAlignment="center"
-                        android:shadowColor="@color/colorPrimaryDark"
-                        android:shadowDx="5"
-                        android:shadowDy="5"
-                        android:shadowRadius="2"/>
+                        android:shadowColor="@color/colorPrimary"
+                        android:shadowDx="2"
+                        android:shadowDy="2"
+                        android:shadowRadius="1"/>
 
                 <Button
                         android:id="@+id/login_button_mail"
@@ -105,6 +105,7 @@
                         android:layout_marginEnd="@dimen/login_button_horizontal_margin"
                         android:textSize="@dimen/login_button_text_size"
                         android:textAllCaps="false"
+                        android:backgroundTint="@color/colorGold"
                         android:stateListAnimator="@null"
                         app:cornerRadius="@dimen/login_button_radius"
                         android:elevation="@dimen/login_button_elevation"/>
@@ -122,6 +123,7 @@
                         android:layout_marginEnd="@dimen/login_button_horizontal_margin"
                         android:textSize="@dimen/login_button_text_size"
                         android:textAllCaps="false"
+                        android:backgroundTint="@color/colorGold"
                         android:stateListAnimator="@null"
                         app:cornerRadius="@dimen/login_button_radius"
                         android:elevation="@dimen/login_button_elevation"/>

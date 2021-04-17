@@ -29,9 +29,9 @@ class MessageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-//        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
-//        bottomNavigationView.menu.getItem(2).isChecked = true
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
+        bottomNavigationView.menu.getItem(2).isChecked = true
     }
 
 }

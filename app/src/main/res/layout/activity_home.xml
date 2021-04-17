@@ -72,7 +72,7 @@
             android:layout_gravity="start"
             app:itemTextColor="@color/drawer_item"
             app:itemIconSize="@dimen/nav_view_icon_size"
-            app:itemIconTint="@null"
+            app:itemIconTint="@color/drawer_item"
             android:background="@color/colorWhite"
             app:itemBackground="@drawable/underline_small_gold"
             android:paddingStart="@dimen/nav_view_padding"

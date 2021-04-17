@@ -57,10 +57,10 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     override fun onResume() {
         super.onResume()
         val navigationView = (activity as AppCompatActivity?)!!.findViewById<NavigationView>(R.id.nav_view)
-        //val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         Utils.setSelectedNavigationItem(4, navigationView)
-        //Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
-        //bottomNavigationView.menu.getItem(0).isChecked = true
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
+        bottomNavigationView.menu.getItem(0).isChecked = true
     }
 
     private fun setupViewModel() {

@@ -62,8 +62,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     override fun onResume() {
         super.onResume()
-       // val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        //Utils.unSelectBottomNavigationItem(bottomNavigationView, false)
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, false)
     }
 
     private fun setupViewModel() {
@@ -119,7 +119,7 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
             }
             else -> {
                 val queryResult = matches.filter{ match -> match.title.contains(from!!, true)}
-                initLayout("Recherche", R.drawable.ball, queryResult)
+                initLayout("Recherche", R.drawable.ic_ball, queryResult)
             }
         }
 

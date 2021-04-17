@@ -75,13 +75,14 @@
 
                 <ImageView
                         android:id="@+id/top_match_image"
-                        android:src="@drawable/top_match"
+                        android:src="@drawable/ic_top_match"
                         android:layout_width="@dimen/default_image_title_size"
                         android:layout_height="@dimen/default_image_title_size"
                         app:layout_constraintTop_toBottomOf="@+id/home_image"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="@dimen/default_image_title_margin_start"
                         android:layout_marginTop="@dimen/default_image_title_margin_top"
+                        android:tint="@color/colorGold"
                         android:backgroundTint="@color/colorTransparent"
                         android:contentDescription="@string/default_image_title_description"/>
 
@@ -93,7 +94,7 @@
                         app:layout_constraintTop_toTopOf="@+id/top_match_image"
                         app:layout_constraintBottom_toBottomOf="@+id/top_match_image"
                         app:layout_constraintStart_toEndOf="@+id/top_match_image"
-                        style="@style/TitleDefaultStyle"/>
+                        style="@style/TitleDefaultStyle" android:layout_marginTop="5dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top_match_recycler_view"
@@ -109,7 +110,8 @@
 
                 <ImageView
                         android:id="@+id/ball_image_view"
-                        android:src="@drawable/ball"
+                        android:src="@drawable/ic_ball"
+                        android:tint="@color/colorGold"
                         android:layout_width="@dimen/ball_image_view_size"
                         android:layout_height="@dimen/ball_image_view_size"
                         app:layout_constraintTop_toBottomOf="@+id/top_match_recycler_view"
@@ -126,7 +128,7 @@
                         app:layout_constraintTop_toTopOf="@+id/ball_image_view"
                         app:layout_constraintBottom_toBottomOf="@+id/ball_image_view"
                         app:layout_constraintStart_toEndOf="@+id/ball_image_view"
-                        style="@style/TitleDefaultStyle"/>
+                        style="@style/TitleDefaultStyle" android:layout_marginTop="5dp"/>
 
                 <ImageButton
                         android:id="@+id/top_match_next_button"
@@ -137,6 +139,7 @@
                         app:layout_constraintTop_toTopOf="@+id/top_match_title"
                         app:layout_constraintBottom_toBottomOf="@+id/top_match_title"
                         android:layout_marginEnd="@dimen/next_button_margin"
+                        android:tint="@color/colorGold"
                         android:backgroundTint="@color/colorTransparent"
                         android:contentDescription="@string/default_image_next_button_description"/>
 
@@ -149,6 +152,7 @@
                         app:layout_constraintTop_toTopOf="@+id/other_match_title"
                         app:layout_constraintBottom_toBottomOf="@+id/other_match_title"
                         android:layout_marginEnd="@dimen/next_button_margin"
+                        android:tint="@color/colorGold"
                         android:backgroundTint="@color/colorTransparent"
                         android:contentDescription="@string/default_image_next_button_description"/>
 
