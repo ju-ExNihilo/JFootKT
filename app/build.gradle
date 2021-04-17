@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'konifar:fab-transformation:1.0.0'
+    implementation "com.github.v2rc:badger:0.3"
     //MaterialSearchView
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     //jetPack

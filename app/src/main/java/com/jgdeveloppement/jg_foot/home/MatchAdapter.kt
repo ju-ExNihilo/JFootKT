@@ -19,7 +19,7 @@ class MatchAdapter(private val context: HomeActivity,
     : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
 
     interface OnCardMatchClicked{
-        fun onClickedMatch(matchUrl: String, matchTitle: String)
+        fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,12 +29,13 @@ class MatchAdapter(private val context: HomeActivity,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val match = matchesList[position]
+        val matchId = match.date + "_" + match.title
 
         holder.domTeam.text = match.side1.name
         holder.extTeam.text = match.side2.name
         Glide.with(context).load(Uri.parse(match.thumbnail)).into(holder.matchImage)
 
-        holder.itemView.setOnClickListener { onCardMatchClicked.onClickedMatch(Utils.getUrl(match.embed), match.title) }
+        holder.itemView.setOnClickListener { onCardMatchClicked.onClickedMatch(Utils.getUrl(match.embed), match.title, matchId) }
     }
 
     override fun getItemCount(): Int = matchesList.size

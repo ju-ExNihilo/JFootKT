@@ -66,6 +66,8 @@
     <string name="accueil">Accueil</string>
     <string name="scores">Scores</string>
     <string name="conversation">Conversation</string>
+    <string name="add">Ajouter</string>
+    <string name="your_comment">Votre Commentaire</string>
     <!-- Bottom Nav String End -->
 
 </resources>

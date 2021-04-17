@@ -176,7 +176,10 @@
                             app:layout_constraintBottom_toBottomOf="@+id/message_title"
                             android:layout_marginEnd="16dp"
                             app:layout_constraintTop_toTopOf="@+id/message_title"
-                            android:focusable="true"/>
+                            android:focusable="true"
+                            android:backgroundTint="@color/colorWhite"
+                            app:tint="@color/colorGold"
+                            app:backgroundTint="@color/colorWhite"/>
 
                     <!-- You must wrap transform view in Circular reveal container -->
                     <io.codetail.widget.RevealFrameLayout
@@ -189,14 +192,91 @@
                             app:layout_constraintEnd_toEndOf="parent">
 
                         <!-- Transform view -->
-                        <Toolbar
-                                android:id="@+id/toolbar_footer"
+                        <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/add_comment_layout"
                                 android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:background="@color/colorWhite"
-                                android:visibility="invisible">
-                            <!-- Put view you like -->
-                        </Toolbar>
+                                android:layout_height="300dp"
+                                android:visibility="invisible"
+                                style="@style/CustomTopCardViewStyle"
+                                android:background="@color/colorWhite">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                <ImageView
+                                        android:id="@+id/add_comment_image_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:srcCompat="@drawable/ic_comment"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginStart="16dp"/>
+
+                                <TextView
+                                        android:id="@+id/add_comment_title"
+                                        android:text="@string/your_comment"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintTop_toTopOf="@+id/add_comment_image_title"
+                                        app:layout_constraintBottom_toBottomOf="@+id/add_comment_image_title"
+                                        app:layout_constraintStart_toEndOf="@+id/add_comment_image_title"
+                                        android:layout_marginStart="16dp"
+                                        android:textSize="18sp"
+                                        android:textColor="@color/colorGold"/>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/add_comment_input_layout"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintTop_toBottomOf="@+id/add_comment_image_title"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        android:layout_marginTop="24dp"
+                                        app:boxCornerRadiusBottomEnd="10dp"
+                                        app:boxCornerRadiusBottomStart="10dp"
+                                        app:boxCornerRadiusTopEnd="10dp"
+                                        app:boxCornerRadiusTopStart="10dp"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/add_comment_edit_text"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="@string/commentaires"
+                                            android:lines="5"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <Button
+                                        android:id="@+id/add_comment_add_button"
+                                        android:text="@string/add"
+                                        android:layout_width="0dp"
+                                        android:layout_height="60dp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/add_comment_input_layout"
+                                        android:layout_marginTop="24dp"
+                                        android:layout_marginStart="32dp"
+                                        android:layout_marginEnd="32dp"
+                                        android:backgroundTint="@color/colorGold"
+                                        app:cornerRadius="10dp"/>
+
+                                <ImageButton
+                                        android:id="@+id/close_comment_button"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        app:srcCompat="@drawable/ic_close"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        android:background="@color/colorTransparent"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
                     </io.codetail.widget.RevealFrameLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

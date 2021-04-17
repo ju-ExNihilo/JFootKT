@@ -10,9 +10,13 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 object Utils {
+    const val ID_HOME = 1
+    const val ID_EXPLORE = 2
+    const val ID_NOTIFICATION = 3
     const val RC_SIGN_IN = 123
     const val RC_MATCH_URL = "RC_MATCH_URL"
     const val RC_MATCH_TITLE = "RC_MATCH_TITLE"
+    const val RC_MATCH_ID = "RC_MATCH_ID"
     const val RC_FROM = "RC_FROM"
     const val TOP_MATCHES = "TOP_MATCHES"
     const val ALL_MATCHES = "ALL_MATCHES"

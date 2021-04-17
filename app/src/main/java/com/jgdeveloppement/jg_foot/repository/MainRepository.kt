@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.models.User
@@ -54,5 +55,16 @@ class MainRepository(private val apiHelper: ApiHelper) {
         }
 
         return user
+    }
+
+    fun getAllComments() : MutableLiveData<List<Comment>> {
+        val commentList = MutableLiveData<List<Comment>>()
+        commentRef.get().addOnCompleteListener { task: Task<QuerySnapshot> ->
+            if (task.isSuccessful){
+                commentList.value = task.result!!.toObjects(Comment::class.java)
+            }
+        }
+
+        return commentList
     }
 }

@@ -57,10 +57,10 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     override fun onResume() {
         super.onResume()
         val navigationView = (activity as AppCompatActivity?)!!.findViewById<NavigationView>(R.id.nav_view)
-        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        //val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         Utils.setSelectedNavigationItem(4, navigationView)
-        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
-        bottomNavigationView.menu.getItem(0).isChecked = true
+        //Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
+        //bottomNavigationView.menu.getItem(0).isChecked = true
     }
 
     private fun setupViewModel() {
@@ -94,12 +94,12 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
         if (topMatch.size > 10) topMatch = topMatch.take(10)
 
-        binding.topMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, topMatch, R.layout.match_item, this)
-        binding.otherMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, allMatch, R.layout.match_item, this)
+        binding.topMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, topMatch.sortedBy { it.date }, R.layout.match_item, this)
+        binding.otherMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, allMatch.sortedBy { it.date }, R.layout.match_item, this)
     }
 
-    override fun onClickedMatch(matchUrl: String, matchTitle: String) {
-        DetailsActivity.navigate(activity, matchUrl, matchTitle)
+    override fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String) {
+        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId)
     }
 
 }

@@ -62,8 +62,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
     override fun onResume() {
         super.onResume()
-        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        Utils.unSelectBottomNavigationItem(bottomNavigationView, false)
+       // val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        //Utils.unSelectBottomNavigationItem(bottomNavigationView, false)
     }
 
     private fun setupViewModel() {
@@ -133,7 +133,7 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
             binding.errorTextView.visibility = View.GONE
             binding.matchesTitle.text = title
             binding.matchesImageTitle.setImageDrawable(resources.getDrawable(drawableId, null))
-            binding.matchesRecyclerView.adapter = MatchAdapter(context as HomeActivity, matches, R.layout.matches_item, this)
+            binding.matchesRecyclerView.adapter = MatchAdapter(context as HomeActivity, matches.sortedBy { it.date }, R.layout.matches_item, this)
         }else{
             binding.matchesRecyclerView.visibility = View.GONE
             binding.errorTextView.visibility = View.VISIBLE
@@ -151,8 +151,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         Utils.setSelectedNavigationItem(index, navigationView)
     }
 
-    override fun onClickedMatch(matchUrl: String, matchTitle: String) {
-        DetailsActivity.navigate(activity, matchUrl, matchTitle)
+    override fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String) {
+        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId)
     }
 
 }

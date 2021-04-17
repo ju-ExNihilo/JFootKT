@@ -1,11 +1,11 @@
 package com.jgdeveloppement.jg_foot.home
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentActivity
@@ -13,7 +13,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.badge.BadgeDrawable
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityHomeBinding
@@ -26,6 +28,8 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
 
     private lateinit var binding: ActivityHomeBinding
     private var navController: NavController? = null
+    var notificationsBadge : View?  = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +39,29 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setSupportActionBar(binding.toolbar)
         configureDrawerLayout()
-        binding.bottomNavigationView.setupWithNavController(navController!!)
-        binding.navView.setNavigationItemSelectedListener(this)
 
+        binding.navView.setNavigationItemSelectedListener(this)
+        binding.bottomNavigationView.setupWithNavController(navController!!)
+
+        addBadge("2")
+    }
+
+    private fun getBadge() : View {
+        if (notificationsBadge != null){
+            return notificationsBadge!!
+        }
+        val mbottomNavigationMenuView = binding.bottomNavigationView.getChildAt(2) as BottomNavigationMenuView
+        notificationsBadge = LayoutInflater.from(this).inflate(R.layout.custom_badge_layout,
+                mbottomNavigationMenuView,false)
+        return notificationsBadge!!
+    }
+
+    private fun addBadge(count : String) {
+        val badge: BadgeDrawable = binding.bottomNavigationView.getOrCreateBadge(R.id.messageFragment)
+        badge.number = 3
+        badge.backgroundColor = resources.getColor(R.color.colorGold, null)
+        badge.badgeTextColor = resources.getColor(R.color.colorWhite, null)
+        badge.isVisible = true
     }
 
     //  Configure Drawer Layout
@@ -46,6 +70,7 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         binding.layoutDrawer.addDrawerListener(toggle)
         toggle.syncState()
     }
+
 
     //  Configure ToolBar with badge
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -56,6 +81,8 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         binding.searchView.setCursorDrawable(R.drawable.custom_cursor)
         binding.searchView.setSuggestions(resources.getStringArray(R.array.top_match_query))
         binding.searchView.setOnQueryTextListener(this)
+
+
         return true
     }
 
@@ -83,8 +110,8 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
             }
             R.id.logout -> {
                 AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnSuccessListener { finish(); LoginActivity.navigate(this) }
+                        .signOut(this)
+                        .addOnSuccessListener { finish(); LoginActivity.navigate(this) }
             }
             else -> return false
 

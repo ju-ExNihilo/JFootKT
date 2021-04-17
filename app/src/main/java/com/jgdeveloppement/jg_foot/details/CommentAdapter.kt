@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.models.Comment
@@ -42,6 +43,6 @@ class CommentAdapter(private val context: DetailsActivity,
     override fun getItemCount(): Int = commentList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val likeButton : ImageButton = view.findViewById(R.id.like_button)
+        val likeButton : ImageView = view.findViewById(R.id.like_image)
     }
 }
