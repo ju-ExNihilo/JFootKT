@@ -13,7 +13,7 @@
             android:layout_height="wrap_content">
 
         <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/avatar_image_view"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 app:srcCompat="@drawable/avatar"
@@ -30,14 +30,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/avatar_image_view"
                 app:layout_constraintEnd_toStartOf="@+id/frameLayout2"
                 android:layout_marginStart="16dp"
                 android:textSize="18sp"
                 android:textStyle="normal|bold"
                 android:textColor="@color/colorGold"
                 android:ellipsize="marquee"
-                android:singleLine="true" android:layout_marginTop="8dp"/>
+                android:singleLine="true"
+                android:layout_marginTop="8dp"/>
 
         <ImageButton
                 android:id="@+id/imageButton"
@@ -70,7 +71,7 @@
                     android:id="@+id/cart_badge_comment"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="right|end|top"
+                    android:layout_gravity="end|top"
                     android:layout_marginEnd="-10dp"
                     android:layout_marginTop="1dp"
                     android:background="@drawable/ic_circle"
@@ -100,10 +101,10 @@
                     android:src="@drawable/ic_unlike"/>
 
             <TextView
-                    android:id="@+id/cart_badge"
+                    android:id="@+id/cart_badge_like"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="right|end|top"
+                    android:layout_gravity="end|top"
                     android:layout_marginEnd="-10dp"
                     android:layout_marginTop="1dp"
                     android:background="@drawable/ic_circle"

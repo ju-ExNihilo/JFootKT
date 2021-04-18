@@ -8,16 +8,13 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
-import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityDetailsBinding
-import com.jgdeveloppement.jg_foot.home.HomeActivity
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
+import com.jgdeveloppement.jg_foot.models.Liked
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_ID
 import com.jgdeveloppement.jg_foot.webview.MyWebViewClient
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_TITLE
@@ -30,6 +27,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     private lateinit var binding: ActivityDetailsBinding
     private lateinit var mainViewModel: MainViewModel
+    private var matchId: String? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +42,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
             if (intent.hasExtra(RC_MATCH_URL) && intent.hasExtra(RC_MATCH_TITLE) && intent.hasExtra(RC_MATCH_ID)){
                 val matchUrl = intent.getStringExtra(RC_MATCH_URL)
                 val matchTitle = intent.getStringExtra(RC_MATCH_TITLE)
-                val matchId = intent.getStringExtra(RC_MATCH_ID)
+                matchId = intent.getStringExtra(RC_MATCH_ID)
 
                 binding.detailsMatchTitle.text = matchTitle
 
@@ -56,7 +54,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
                 initCommentList()
                 initAddCommentLayout()
-                addComment(matchId!!)
+                addComment()
 
             }
         }
@@ -87,9 +85,17 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getUserId(): String{
+        return FirebaseAuth.getInstance().currentUser!!.uid
+    }
+
     private fun initCommentList(){
-        val commentList = listOf(Comment(), Comment(), Comment(), Comment())
-        binding.commentRecyclerView.adapter = CommentAdapter(this, commentList, this)
+        mainViewModel.getAllComments(matchId!!, getUserId()).observe(this, {
+            binding.commentRecyclerView.adapter = CommentAdapter(this, it, this)
+            for (comment in it){
+                Log.i("DEBUGGG", comment.toString())
+            }
+        })
     }
 
     private fun initAddCommentLayout(){
@@ -108,10 +114,10 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         binding.commentRecyclerView.visibility = View.VISIBLE
     }
 
-    private fun addComment(matchId : String){
+    private fun addComment(){
         binding.addCommentAddButton.setOnClickListener {
             val message = binding.addCommentEditText.text.toString()
-            val id = mainViewModel.getReferenceId()
+            val id = mainViewModel.getCommentReferenceId()
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
             mainViewModel.getUser(userId).observe(this, { user ->
@@ -119,15 +125,19 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                 val userUrlImage = user.avatarUrl
 
                 if (message.isNotBlank()){
-                    val comment = Comment(id, userId, userName, userUrlImage, matchId, message)
+                    val comment = Comment(id, userId, userName, userUrlImage, matchId!!, message)
                     mainViewModel.addComment(comment)
                     closeAddCommentLayout()
+                    initCommentList()
                 }
             })
         }
     }
 
-    override fun onClickedLike(commentId: String) {
+    override fun onClickedLike(commentId: String, haveLiked: Boolean) {
+        val liked = Liked(mainViewModel.getLikeReferenceId(commentId), getUserId())
+        mainViewModel.addLiked(liked, commentId)
+        mainViewModel.updateLikeCount(commentId, haveLiked, getUserId()) { initCommentList() }
 
     }
 

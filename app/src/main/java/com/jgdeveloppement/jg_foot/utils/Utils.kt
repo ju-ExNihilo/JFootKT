@@ -7,6 +7,10 @@ import android.view.inputmethod.InputMethodManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.type.DateTime
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 object Utils {
@@ -89,5 +93,9 @@ object Utils {
             result = find.substring(0, find.length - 13)
         }
         return result
+    }
+
+    fun getFormatDateTime(date: Date): String {
+        return SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(date)
     }
 }

@@ -2,14 +2,15 @@ package com.jgdeveloppement.jg_foot.models
 
 import java.util.*
 
-data class Comment(
+data class FinalComment(
     val id: String = "none",
     val userId: String = "none",
     val userName: String = "none",
     val userUrlImage: String = "none",
     val fromId: String = "none",
-    val comment: String = "none",
     val createdAt: Date = Date(),
+    val comment: String = "none",
     var countLike: Int = 0,
     var countComment: Int = 0,
+    var haveLiked: Boolean = false
 )
