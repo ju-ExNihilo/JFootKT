@@ -7,13 +7,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
+import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityDetailsBinding
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
+import com.jgdeveloppement.jg_foot.models.FinalComment
 import com.jgdeveloppement.jg_foot.models.Liked
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_ID
 import com.jgdeveloppement.jg_foot.webview.MyWebViewClient
@@ -90,11 +93,10 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     }
 
     private fun initCommentList(){
-        mainViewModel.getAllComments(matchId!!, getUserId()).observe(this, {
-            binding.commentRecyclerView.adapter = CommentAdapter(this, it, this)
-            for (comment in it){
-                Log.i("DEBUGGG", comment.toString())
-            }
+        val slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up)
+        binding.commentRecyclerView.animation = slideUp
+        mainViewModel.getAllComments(matchId!!, getUserId()).observe(this, { list ->
+            binding.commentRecyclerView.adapter = CommentAdapter(this, list.sortedByDescending { it.createdAt } , getUserId(), this)
         })
     }
 
@@ -128,7 +130,9 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                     val comment = Comment(id, userId, userName, userUrlImage, matchId!!, message)
                     mainViewModel.addComment(comment)
                     closeAddCommentLayout()
+
                     initCommentList()
+                    binding.addCommentEditText.text?.clear()
                 }
             })
         }
@@ -143,6 +147,13 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onClickedComment(commentId: String) {
 
+    }
+
+    override fun onClickedDeleteButton(commentId: String) {
+        mainViewModel.deleteComment(commentId) { initCommentList() }
+        Log.i("DEBUGGG", binding.commentRecyclerView.adapter!!.itemCount.toString())
+        if (binding.commentRecyclerView.adapter!!.itemCount == 1)
+            binding.commentRecyclerView.adapter = CommentAdapter(this, listOf() , getUserId(), this)
     }
 
     companion object {

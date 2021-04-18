@@ -94,8 +94,8 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
 
         if (topMatch.size > 10) topMatch = topMatch.take(10)
 
-        binding.topMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, topMatch.sortedBy { it.date }, R.layout.match_item, this)
-        binding.otherMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, allMatch.sortedBy { it.date }, R.layout.match_item, this)
+        binding.topMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, topMatch.sortedByDescending { it.date }, R.layout.match_item, this)
+        binding.otherMatchRecyclerView.adapter = MatchAdapter(context as HomeActivity, allMatch.sortedByDescending { it.date }, R.layout.match_item, this)
     }
 
     override fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String) {

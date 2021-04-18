@@ -20,6 +20,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     fun getCommentReferenceId() = mainRepository.getCommentReferenceId()
     fun addComment(comment: Comment) = mainRepository.addComment(comment)
     fun getAllComments(fromId: String, userId: String) = mainRepository.getAllComments(fromId, userId)
+    fun deleteComment(commentId: String, callback: ()->Unit) = mainRepository.deleteComment(commentId, callback)
 
     //Like
     fun getLikeReferenceId(commentId: String) = mainRepository.getLikeReferenceId(commentId)

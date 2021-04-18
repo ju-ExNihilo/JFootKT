@@ -47,6 +47,12 @@ class MainRepository(private val apiHelper: ApiHelper) {
     fun addUser(user: User) = userRef.document(user.id).set(user)
     fun addComment(comment: Comment) = commentRef.document(comment.id).set(comment)
     fun addLiked(liked: Liked, docId: String) = likedRef(docId).document(liked.userId).set(liked)
+    
+    //Delete
+    fun deleteComment(commentId: String, callback: ()->Unit) {
+        commentRef.document(commentId).delete()
+        callback()
+    }
 
     //Update
     fun updateLikeCount(commentId: String, haveLike: Boolean, userId: String, callback: ()->Unit){
@@ -102,7 +108,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
                     val finalComment = FinalComment(comment.id, comment.userId, comment.userName, comment.userUrlImage,
                         comment.fromId, comment.createdAt, comment.comment, comment.countLike, comment.countComment)
 
-                    commentRef.whereEqualTo("id", comment.id).get().addOnCompleteListener { commentTask: Task<QuerySnapshot> ->
+                    commentRef.whereEqualTo("fromId", comment.id).get().addOnCompleteListener { commentTask: Task<QuerySnapshot> ->
                         if (commentTask.isSuccessful) finalComment.countComment = commentTask.result!!.size()
 
                         likedRef(comment.id).get().addOnCompleteListener { likedTask: Task<QuerySnapshot> ->

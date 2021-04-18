@@ -96,6 +96,6 @@ object Utils {
     }
 
     fun getFormatDateTime(date: Date): String {
-        return SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(date)
+        return SimpleDateFormat("dd/MM/yyyy à HH:mm", Locale.getDefault()).format(date)
     }
 }

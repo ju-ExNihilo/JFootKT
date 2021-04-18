@@ -133,7 +133,7 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
             binding.errorTextView.visibility = View.GONE
             binding.matchesTitle.text = title
             binding.matchesImageTitle.setImageDrawable(resources.getDrawable(drawableId, null))
-            binding.matchesRecyclerView.adapter = MatchAdapter(context as HomeActivity, matches.sortedBy { it.date }, R.layout.matches_item, this)
+            binding.matchesRecyclerView.adapter = MatchAdapter(context as HomeActivity, matches.sortedByDescending { it.date }, R.layout.matches_item, this)
         }else{
             binding.matchesRecyclerView.visibility = View.GONE
             binding.errorTextView.visibility = View.VISIBLE
