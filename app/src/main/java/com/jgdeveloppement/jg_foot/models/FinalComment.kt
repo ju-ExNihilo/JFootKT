@@ -1,5 +1,7 @@
 package com.jgdeveloppement.jg_foot.models
 
+
+import java.io.Serializable
 import java.util.*
 
 data class FinalComment(
@@ -13,4 +15,4 @@ data class FinalComment(
     var countLike: Int = 0,
     var countComment: Int = 0,
     var haveLiked: Boolean = false
-)
+): Serializable

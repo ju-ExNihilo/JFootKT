@@ -21,8 +21,8 @@
               tools:layout="@layout/fragment_matches"/>
 
     <fragment android:id="@+id/messageFragment"
-              android:name="com.jgdeveloppement.jg_foot.message.MessageFragment"
+              android:name="com.jgdeveloppement.jg_foot.notification.NotificationFragment"
               android:label="fragment_message"
-              tools:layout="@layout/fragment_message"/>
+              tools:layout="@layout/fragment_notification"/>
 
 </navigation>

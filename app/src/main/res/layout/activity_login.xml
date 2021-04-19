@@ -105,10 +105,10 @@
                         android:layout_marginEnd="@dimen/login_button_horizontal_margin"
                         android:textSize="@dimen/login_button_text_size"
                         android:textAllCaps="false"
-                        android:backgroundTint="@color/colorGold"
+                        android:backgroundTint="@color/colorWhite"
                         android:stateListAnimator="@null"
                         app:cornerRadius="@dimen/login_button_radius"
-                        android:elevation="@dimen/login_button_elevation"/>
+                        android:elevation="@dimen/login_button_elevation" android:textColor="@color/colorGold"/>
 
                 <Button
                         android:id="@+id/login_button_google"
@@ -123,10 +123,10 @@
                         android:layout_marginEnd="@dimen/login_button_horizontal_margin"
                         android:textSize="@dimen/login_button_text_size"
                         android:textAllCaps="false"
-                        android:backgroundTint="@color/colorGold"
+                        android:backgroundTint="@color/colorWhite"
                         android:stateListAnimator="@null"
                         app:cornerRadius="@dimen/login_button_radius"
-                        android:elevation="@dimen/login_button_elevation"/>
+                        android:elevation="@dimen/login_button_elevation" android:textColor="@color/colorGold"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

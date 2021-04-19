@@ -44,17 +44,18 @@ class MainRepository(private val apiHelper: ApiHelper) {
     //FireStore
 
     //Insert
-    fun addUser(user: User) = userRef.document(user.id).set(user)
-    fun addComment(comment: Comment) = commentRef.document(comment.id).set(comment)
-    fun addLiked(liked: Liked, docId: String) = likedRef(docId).document(liked.userId).set(liked)
+    fun addUser(user: User): Task<Void> { return userRef.document(user.id).set(user) }
+    fun addComment(comment: Comment): Task<Void> { return commentRef.document(comment.id).set(comment) }
+    fun addLiked(liked: Liked, docId: String): Task<Void> { return likedRef(docId).document(liked.id).set(liked) }
     
     //Delete
-    fun deleteComment(commentId: String, callback: ()->Unit) {
-        commentRef.document(commentId).delete()
-        callback()
-    }
+    fun deleteComment(commentId: String): Task<Void> { return commentRef.document(commentId).delete() }
+    private fun deleteLike(commentId: String, likedId: String): Task<Void> { return likedRef(commentId).document(likedId).delete() }
+
 
     //Update
+    private fun updateCount(commentId: String, likeCount: Int): Task<Void>{ return  commentRef.document(commentId).update("countLike", likeCount) }
+
     fun updateLikeCount(commentId: String, haveLike: Boolean, userId: String, callback: ()->Unit){
         commentRef.document(commentId).get().addOnCompleteListener { task: Task<DocumentSnapshot> ->
             if (task.isSuccessful){
@@ -62,18 +63,26 @@ class MainRepository(private val apiHelper: ApiHelper) {
                 val likeCount: Int
                 if (!haveLike){
                     likeCount = comment!!.countLike +1
+                    updateCount(commentId, likeCount)
+                    callback()
                 } else {
                     likeCount = comment!!.countLike -1
+                    var wait = 0
                     likedRef(commentId).whereEqualTo("userId", userId).get().addOnCompleteListener { likedTask: Task<QuerySnapshot> ->
                         if (likedTask.isSuccessful){
-                            for (t in likedTask.result!!){
-                                likedRef(commentId).document(t.reference.id).delete()
+                            val n = likedTask.result!!.size()
+                            for (liked in likedTask.result!!.toObjects(Liked::class.java)){
+                                deleteLike(commentId, liked.id)
+                                wait++
+                                Log.i("DEBUGGG", "wait = $wait n = $n")
+                                if (wait == n){
+                                    updateCount(commentId, likeCount)
+                                    callback()
+                                }
                             }
                         }
                     }
                 }
-                commentRef.document(commentId).update("countLike", likeCount)
-                callback()
             }
         }
     }
@@ -119,7 +128,8 @@ class MainRepository(private val apiHelper: ApiHelper) {
                                     }
                                 }
                                 commentList.add(finalComment)
-                                finalCommentList.value = commentList
+                                val finalList = commentList.sortedByDescending { it.createdAt }
+                                finalCommentList.value = finalList
                             }
                         }
 

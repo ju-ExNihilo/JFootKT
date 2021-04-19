@@ -62,13 +62,14 @@
 
                         <ImageView
                                 android:id="@+id/matches_image"
+                                android:transitionName="@string/transition_animation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/default_top_image_height"
-                                app:srcCompat="@drawable/card_image"
+                                app:srcCompat="@drawable/card_image1"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:background="@color/colorWhite"
+                                android:background="@color/colorTransparent"
                                 android:alpha="0.8"
                                 android:adjustViewBounds="true"
                                 android:contentDescription="@string/default_image_description"/>

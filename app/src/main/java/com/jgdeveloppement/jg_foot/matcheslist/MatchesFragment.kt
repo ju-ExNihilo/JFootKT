@@ -152,7 +152,7 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     }
 
     override fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String) {
-        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId)
+        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId, binding.matchesImage)
     }
 
 }

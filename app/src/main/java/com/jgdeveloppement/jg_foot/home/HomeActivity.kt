@@ -1,5 +1,6 @@
 package com.jgdeveloppement.jg_foot.home
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -43,22 +44,12 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         binding.navView.setNavigationItemSelectedListener(this)
         binding.bottomNavigationView.setupWithNavController(navController!!)
 
-        addBadge("2")
+        addBadge(2)
     }
 
-    private fun getBadge() : View {
-        if (notificationsBadge != null){
-            return notificationsBadge!!
-        }
-        val mbottomNavigationMenuView = binding.bottomNavigationView.getChildAt(2) as BottomNavigationMenuView
-        notificationsBadge = LayoutInflater.from(this).inflate(R.layout.custom_badge_layout,
-                mbottomNavigationMenuView,false)
-        return notificationsBadge!!
-    }
-
-    private fun addBadge(count : String) {
+    private fun addBadge(count : Int) {
         val badge: BadgeDrawable = binding.bottomNavigationView.getOrCreateBadge(R.id.messageFragment)
-        badge.number = 3
+        badge.number = count
         badge.backgroundColor = resources.getColor(R.color.colorGold, null)
         badge.badgeTextColor = resources.getColor(R.color.colorWhite, null)
         badge.isVisible = true

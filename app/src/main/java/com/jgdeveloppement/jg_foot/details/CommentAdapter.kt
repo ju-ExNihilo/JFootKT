@@ -4,13 +4,13 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jgdeveloppement.jg_foot.R
-import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.models.FinalComment
 import com.jgdeveloppement.jg_foot.utils.Utils
 
@@ -22,7 +22,7 @@ class CommentAdapter(private val context: DetailsActivity,
 
     interface OnCommentClicked{
         fun onClickedLike(commentId: String, haveLiked: Boolean)
-        fun onClickedComment(commentId: String)
+        fun onClickedComment(comment: FinalComment, imageTransition: View)
         fun onClickedDeleteButton(commentId: String)
     }
 
@@ -51,12 +51,10 @@ class CommentAdapter(private val context: DetailsActivity,
         }
 
         if (comment.haveLiked){
-            holder.likeButton.setImageDrawable(context.resources.getDrawable(R.drawable.ic_like, null))
+            holder.likeImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_like, null))
         }else{
-            holder.likeButton.setImageDrawable(context.resources.getDrawable(R.drawable.ic_unlike, null))
+            holder.likeImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_unlike, null))
         }
-
-        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(comment.id, comment.haveLiked) }
 
         //Comment
         holder.userName.text = comment.userName
@@ -64,6 +62,9 @@ class CommentAdapter(private val context: DetailsActivity,
         holder.date.text = Utils.getFormatDateTime(comment.createdAt)
         holder.commentMessage.text = comment.comment
 
+        //Click Listener
+        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(comment.id, comment.haveLiked) }
+        holder.commentButton.setOnClickListener { onCommentClicked.onClickedComment(comment, holder.avatar) }
         //delete
         if (comment.userId == userId) {
             holder.deleteButton.visibility = View.VISIBLE
@@ -74,7 +75,7 @@ class CommentAdapter(private val context: DetailsActivity,
     override fun getItemCount(): Int = commentList.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val likeButton : ImageView = view.findViewById(R.id.like_image)
+        val likeImage : ImageView = view.findViewById(R.id.like_image)
         val countComment : TextView = view.findViewById(R.id.cart_badge_comment)
         val countLike : TextView = view.findViewById(R.id.cart_badge_like)
         val avatar : ImageView = view.findViewById(R.id.avatar_image_view)
@@ -82,5 +83,7 @@ class CommentAdapter(private val context: DetailsActivity,
         val commentMessage : TextView = view.findViewById(R.id.comment_text_view)
         val date : TextView = view.findViewById(R.id.date_text_view)
         val deleteButton : ImageButton = view.findViewById(R.id.delete_button)
+        val likeButton : FrameLayout = view.findViewById(R.id.like_layout)
+        val commentButton : FrameLayout = view.findViewById(R.id.comment_layout)
     }
 }

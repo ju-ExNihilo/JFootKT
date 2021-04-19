@@ -49,6 +49,8 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         navController = Navigation.findNavController(view)
         setupViewModel()
         initMatches()
+        val lengt = "un commentaire un peu long pour tester comment cela rend sur le layout je vais jute rajouter un peu plus de text"
+        Log.i("DEBUGGG", "lenght = ${lengt.length}")
 
         binding.topMatchNextButton.setOnClickListener { HomeActivity.navigateToMatchesList(TOP_MATCHES, navController) }
         binding.otherMatchNextButton.setOnClickListener { HomeActivity.navigateToMatchesList(ALL_MATCHES, navController) }
@@ -99,7 +101,7 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
     }
 
     override fun onClickedMatch(matchUrl: String, matchTitle: String, matchId: String) {
-        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId)
+        DetailsActivity.navigate(activity, matchUrl, matchTitle, matchId, binding.homeImage)
     }
 
 }
