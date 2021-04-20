@@ -20,10 +20,12 @@ import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.models.Liked
 import com.jgdeveloppement.jg_foot.reply.ReplyActivity
+import com.jgdeveloppement.jg_foot.reply.ReplyListActivity
 import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_ID
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_TITLE
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_URL
+import com.jgdeveloppement.jg_foot.utils.Utils.hideKeyboard
 import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 import com.jgdeveloppement.jg_foot.webview.MyWebChromeClient
 import com.jgdeveloppement.jg_foot.webview.MyWebViewClient
@@ -148,6 +150,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                     if (message.isNotBlank()) {
                         val comment = Comment(id, getUserId(), userName, userUrlImage, matchId!!, message)
                         mainViewModel.addComment(comment)
+                        applicationContext.hideKeyboard(binding.detailsFragmentLayout)
                         closeAddCommentLayout()
                         binding.addCommentEditText.text?.clear()
                     }
@@ -162,7 +165,9 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onClickedComment(comment: Comment, imageTransition: View) { ReplyActivity.navigate(this, comment, imageTransition) }
 
-    override fun onClickedDeleteButton(commentId: String) { mainViewModel.deleteComment(commentId) }
+    override fun onClickedDeleteButton(comment: Comment) { mainViewModel.deleteComment(comment) }
+
+    override fun onClickedItem(comment: Comment, imageTransition: View) { ReplyListActivity.navigate(this, comment, imageTransition) }
 
     private fun getUserId() = FirebaseAuth.getInstance().currentUser!!.uid
 

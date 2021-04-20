@@ -40,13 +40,18 @@ class MainRepository(private val apiHelper: ApiHelper) {
     private fun addLiked(commentId: String, liked: Liked): Task<Void> { return likedRef(commentId).document(liked.userId).set(liked) }
     
     //Delete
-    fun deleteComment(commentId: String): Task<Void> { return commentRef.document(commentId).delete() }
+    fun deleteComment(comment: Comment): Task<Void> {
+        isFromComment(comment.fromId)
+        return commentRef.document(comment.id).delete()
+    }
     private fun deleteLiked(commentId: String, likedId: String): Task<Void> { return likedRef(commentId).document(likedId).delete() }
+
 
     //Update
     private fun incrementLike(commentId: String): Task<Void>{ return commentRef.document(commentId).update("countLike", FieldValue.increment(1)) }
     private fun decrementLike(commentId: String): Task<Void>{ return commentRef.document(commentId).update("countLike", FieldValue.increment(-1)) }
     fun incrementComment(commentId: String): Task<Void>{ return commentRef.document(commentId).update("countComment", FieldValue.increment(1)) }
+    private fun decrementComment(commentId: String): Task<Void>{ return commentRef.document(commentId).update("countComment", FieldValue.increment(-1)) }
 
     fun updateLikeCount(commentId: String, userId: String){
         likedRef(commentId).get().addOnCompleteListener { likedTask: Task<QuerySnapshot> ->
@@ -78,6 +83,16 @@ class MainRepository(private val apiHelper: ApiHelper) {
             if (task.isSuccessful) user.value = task.result!!.toObject(User::class.java)
         }
         return user
+    }
+
+    private fun isFromComment(id: String) {
+        commentRef.document(id).get().addOnCompleteListener { task: Task<DocumentSnapshot> ->
+            if (task.isSuccessful) {
+                val comment = task.result!!.toObject(Comment::class.java)
+                if (comment != null) decrementComment(comment.id)
+            }
+        }
+
     }
 
     fun getLiveAllComment(fromId: String): FirestoreRecyclerOptions<Comment> {

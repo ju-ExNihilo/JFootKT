@@ -12,6 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".reply.ReplyListActivity"
+                android:label="@string/app_no_name"/>
+        <activity
                 android:name=".reply.ReplyActivity"
                 android:label="@string/app_no_name"/>
         <activity

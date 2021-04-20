@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -16,7 +17,7 @@ import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.utils.Utils
 
-class CommentAdapter(private val context: DetailsActivity,
+class CommentAdapter(private val context: FragmentActivity,
                      options: FirestoreRecyclerOptions<Comment>,
                      private val userId: String,
                      private val onCommentClicked: OnCommentClicked)
@@ -25,7 +26,8 @@ class CommentAdapter(private val context: DetailsActivity,
     interface OnCommentClicked{
         fun onClickedLike(commentId: String)
         fun onClickedComment(comment: Comment, imageTransition: View)
-        fun onClickedDeleteButton(commentId: String)
+        fun onClickedDeleteButton(comment: Comment)
+        fun onClickedItem(comment: Comment, imageTransition: View)
     }
 
 
@@ -67,10 +69,12 @@ class CommentAdapter(private val context: DetailsActivity,
         //delete
         if (model.userId == userId) {
             holder.deleteButton.visibility = View.VISIBLE
-            holder.deleteButton.setOnClickListener { onCommentClicked.onClickedDeleteButton(model.id) }
+            holder.deleteButton.setOnClickListener { onCommentClicked.onClickedDeleteButton(model) }
         }else{
             holder.deleteButton.visibility = View.GONE
         }
+
+        holder.itemView.setOnClickListener { onCommentClicked.onClickedItem(model, holder.avatar) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){

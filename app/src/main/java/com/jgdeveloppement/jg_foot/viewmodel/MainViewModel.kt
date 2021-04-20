@@ -18,7 +18,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     //Comment
     fun getCommentReferenceId() = mainRepository.getCommentReferenceId()
     fun addComment(comment: Comment) = mainRepository.addComment(comment)
-    fun deleteComment(commentId: String) = mainRepository.deleteComment(commentId)
+    fun deleteComment(comment: Comment) = mainRepository.deleteComment(comment)
     fun updateCommentCount(commentId: String) = mainRepository.incrementComment(commentId)
     fun getLiveAllComment(fromId: String) = mainRepository.getLiveAllComment(fromId)
 
