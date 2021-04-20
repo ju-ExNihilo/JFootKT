@@ -10,19 +10,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.jgdeveloppement.jg_foot.R
-import com.jgdeveloppement.jg_foot.models.FinalComment
+import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.utils.Utils
 
 class CommentAdapter(private val context: DetailsActivity,
-                     private val commentList: List<FinalComment>,
+                     options: FirestoreRecyclerOptions<Comment>,
                      private val userId: String,
                      private val onCommentClicked: OnCommentClicked)
-    : RecyclerView.Adapter<CommentAdapter.ViewHolder>(){
+    : FirestoreRecyclerAdapter<Comment, CommentAdapter.ViewHolder>(options){
 
     interface OnCommentClicked{
-        fun onClickedLike(commentId: String, haveLiked: Boolean)
-        fun onClickedComment(comment: FinalComment, imageTransition: View)
+        fun onClickedLike(commentId: String)
+        fun onClickedComment(comment: Comment, imageTransition: View)
         fun onClickedDeleteButton(commentId: String)
     }
 
@@ -32,50 +34,46 @@ class CommentAdapter(private val context: DetailsActivity,
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val comment = commentList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Comment)  {
 
-        //Like And Comment
-        if (comment.countLike == 0){
+        //Count
+        if (model.countLike == 0){
             holder.countLike.visibility = View.GONE
         }else{
-            holder.countLike.text = comment.countLike.toString()
+            holder.countLike.text = model.countLike.toString()
             holder.countLike.visibility = View.VISIBLE
         }
 
-        if (comment.countComment == 0){
+        if (model.countComment == 0){
             holder.countComment.visibility = View.GONE
         }else{
-            holder.countComment.text = comment.countComment.toString()
+            holder.countComment.text = model.countComment.toString()
             holder.countComment.visibility = View.VISIBLE
         }
 
-        if (comment.haveLiked){
-            holder.likeImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_like, null))
-        }else{
-            holder.likeImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_unlike, null))
-        }
-
         //Comment
-        holder.userName.text = comment.userName
-        if (comment.userUrlImage != "none") Glide.with(context).load(Uri.parse(comment.userUrlImage)).circleCrop().into(holder.avatar)
-        holder.date.text = Utils.getFormatDateTime(comment.createdAt)
-        holder.commentMessage.text = comment.comment
+        holder.userName.text = model.userName
+        if (model.userUrlImage == "none"){
+            holder.avatar.setImageDrawable(context.resources.getDrawable(R.drawable.avatar, null))
+        }else{
+            Glide.with(context).load(Uri.parse(model.userUrlImage)).circleCrop().into(holder.avatar)
+        }
+        holder.date.text = Utils.getFormatDateTime(model.createdAt)
+        holder.commentMessage.text = model.comment
 
         //Click Listener
-        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(comment.id, comment.haveLiked) }
-        holder.commentButton.setOnClickListener { onCommentClicked.onClickedComment(comment, holder.avatar) }
+        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(model.id) }
+        holder.commentButton.setOnClickListener { onCommentClicked.onClickedComment(model, holder.avatar) }
         //delete
-        if (comment.userId == userId) {
+        if (model.userId == userId) {
             holder.deleteButton.visibility = View.VISIBLE
-            holder.deleteButton.setOnClickListener { onCommentClicked.onClickedDeleteButton(comment.id) }
+            holder.deleteButton.setOnClickListener { onCommentClicked.onClickedDeleteButton(model.id) }
+        }else{
+            holder.deleteButton.visibility = View.GONE
         }
     }
 
-    override fun getItemCount(): Int = commentList.size
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val likeImage : ImageView = view.findViewById(R.id.like_image)
         val countComment : TextView = view.findViewById(R.id.cart_badge_comment)
         val countLike : TextView = view.findViewById(R.id.cart_badge_like)
         val avatar : ImageView = view.findViewById(R.id.avatar_image_view)

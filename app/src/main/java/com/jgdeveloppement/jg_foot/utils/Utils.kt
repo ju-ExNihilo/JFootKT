@@ -8,16 +8,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.type.DateTime
+import com.jgdeveloppement.jg_foot.R
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 object Utils {
-    const val ID_HOME = 1
-    const val ID_EXPLORE = 2
-    const val ID_NOTIFICATION = 3
     const val RC_SIGN_IN = 123
+    const val RC_HAVE_LIKE = "RC_HAVE_LIKE"
     const val RC_MATCH_URL = "RC_MATCH_URL"
     const val RC_MATCH_TITLE = "RC_MATCH_TITLE"
     const val RC_MATCH_ID = "RC_MATCH_ID"
@@ -30,6 +29,8 @@ object Utils {
     const val LIGA = "SPAIN: La Liga"
     const val SERIE_A = "ITALY: Serie A"
     const val URL_LIVE_SCORE = "https://www.scorebat.com/embed/livescore/"
+    var haveReply = false
+    var commentId: String? = null
 
     fun showSnackBar(view: View?, message: String) {
         Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()

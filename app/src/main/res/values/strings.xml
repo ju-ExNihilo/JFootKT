@@ -14,6 +14,7 @@
     <string name="navigation_drawer_close">close</string>
     <string name="transition_animation">transition_animation</string>
     <string name="transition_animation_comment">transition_animation_comment</string>
+    <string name="reply_been_send">Votre réponse à bien était envoyé</string>
     <!-- Utils String End -->
 
     <!-- Login String -->

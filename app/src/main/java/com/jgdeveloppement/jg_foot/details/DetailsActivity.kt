@@ -11,15 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityDetailsBinding
 import com.jgdeveloppement.jg_foot.dialog.BadWordPopup
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
-import com.jgdeveloppement.jg_foot.models.FinalComment
 import com.jgdeveloppement.jg_foot.models.Liked
 import com.jgdeveloppement.jg_foot.reply.ReplyActivity
+import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_ID
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_TITLE
 import com.jgdeveloppement.jg_foot.utils.Utils.RC_MATCH_URL
@@ -34,6 +35,8 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     private lateinit var binding: ActivityDetailsBinding
     private lateinit var mainViewModel: MainViewModel
     private var matchId: String? = null
+    private var adapter: CommentAdapter? = null
+
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +54,6 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                 matchId = intent.getStringExtra(RC_MATCH_ID)
 
                 binding.detailsMatchTitle.text = matchTitle
-
                 binding.detailsWebView.webViewClient =  MyWebViewClient(this)
                 binding.detailsWebView.loadUrl(matchUrl)
                 binding.detailsWebView.settings.allowContentAccess = true
@@ -65,6 +67,21 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                 initAddCommentLayout()
                 addComment()
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Utils.haveReply){
+            Utils.haveReply = false
+            Utils.showSnackBar(binding.detailsFragmentLayout, getString(R.string.reply_been_send))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (adapter != null) {
+            adapter!!.stopListening()
         }
     }
 
@@ -93,16 +110,12 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getUserId(): String{
-        return FirebaseAuth.getInstance().currentUser!!.uid
-    }
-
     private fun initCommentList(){
-        val slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up)
-        binding.commentRecyclerView.animation = slideUp
-        mainViewModel.getAllComments(matchId!!, getUserId()).observe(this, { list ->
-            binding.commentRecyclerView.adapter = CommentAdapter(this, list, getUserId(), this)
-        })
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        binding.commentRecyclerView.animation = fadeIn
+        adapter = CommentAdapter(this, mainViewModel.getLiveAllComment(matchId!!), getUserId(), this)
+        binding.commentRecyclerView.adapter = adapter
+        adapter!!.startListening()
     }
 
     private fun initAddCommentLayout(){
@@ -110,7 +123,6 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
             binding.commentRecyclerView.visibility = View.GONE
             FabTransformation.with(binding.addFloatingButton).transformTo(binding.addCommentLayout as View)
         }
-
         binding.closeCommentButton.setOnClickListener {
             closeAddCommentLayout()
         }
@@ -126,46 +138,33 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
             val badWord = resources.getStringArray(R.array.bad_word)
             val message = binding.addCommentEditText.text.toString()
             val id = mainViewModel.getCommentReferenceId()
-            val userId = FirebaseAuth.getInstance().currentUser!!.uid
             val haveBadWord = badWord.filter { message.contains(it, ignoreCase = true) }
 
             if (haveBadWord.isEmpty()){
-                mainViewModel.getUser(userId).observe(this, { user ->
+                mainViewModel.getUser(getUserId()).observe(this, { user ->
                     val userName = user.name
                     val userUrlImage = user.avatarUrl
 
                     if (message.isNotBlank()) {
-                        val comment = Comment(id, userId, userName, userUrlImage, matchId!!, message)
+                        val comment = Comment(id, getUserId(), userName, userUrlImage, matchId!!, message)
                         mainViewModel.addComment(comment)
                         closeAddCommentLayout()
-
-                        initCommentList()
                         binding.addCommentEditText.text?.clear()
                     }
                 })
             }else{
                 BadWordPopup(this).show()
             }
-
         }
     }
 
-    override fun onClickedLike(commentId: String, haveLiked: Boolean) {
-        val liked = Liked(mainViewModel.getLikeReferenceId(commentId), getUserId(), false)
-        mainViewModel.addLiked(liked, commentId)
-        mainViewModel.updateLikeCount(commentId, haveLiked, getUserId()) { initCommentList() }
-    }
+    override fun onClickedLike(commentId: String) { mainViewModel.updateLikeCount(commentId, getUserId()) }
 
-    override fun onClickedComment(comment: FinalComment, imageTransition: View) {
-        ReplyActivity.navigate(this, comment, imageTransition)
-    }
+    override fun onClickedComment(comment: Comment, imageTransition: View) { ReplyActivity.navigate(this, comment, imageTransition) }
 
-    override fun onClickedDeleteButton(commentId: String) {
-        mainViewModel.deleteComment(commentId)
-        initCommentList()
-        if (binding.commentRecyclerView.adapter!!.itemCount == 1)
-            binding.commentRecyclerView.adapter = CommentAdapter(this, listOf(), getUserId(), this)
-    }
+    override fun onClickedDeleteButton(commentId: String) { mainViewModel.deleteComment(commentId) }
+
+    private fun getUserId() = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */

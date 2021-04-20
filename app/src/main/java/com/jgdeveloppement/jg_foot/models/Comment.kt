@@ -1,5 +1,6 @@
 package com.jgdeveloppement.jg_foot.models
 
+import java.io.Serializable
 import java.util.*
 
 data class Comment(
@@ -12,4 +13,4 @@ data class Comment(
     val createdAt: Date = Date(),
     var countLike: Int = 0,
     var countComment: Int = 0,
-)
+): Serializable

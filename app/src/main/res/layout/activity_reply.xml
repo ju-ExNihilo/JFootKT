@@ -246,7 +246,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                        android:id="@+id/add_comment_add_button"
+                        android:id="@+id/reply_add_button"
                         android:text="Envoyez"
                         android:layout_width="0dp"
                         android:layout_height="60dp"

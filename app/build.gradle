@@ -49,6 +49,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'konifar:fab-transformation:1.0.0'
     implementation "com.github.v2rc:badger:0.3"
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
     //MaterialSearchView
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     //jetPack
@@ -64,6 +65,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.6.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:6.4.0'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     //LifeCycle
     implementation 'androidx.lifecycle:lifecycle-common:2.3.1'
