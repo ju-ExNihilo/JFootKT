@@ -11,14 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityDetailsBinding
 import com.jgdeveloppement.jg_foot.dialog.BadWordPopup
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
-import com.jgdeveloppement.jg_foot.models.Liked
 import com.jgdeveloppement.jg_foot.reply.ReplyActivity
 import com.jgdeveloppement.jg_foot.reply.ReplyListActivity
 import com.jgdeveloppement.jg_foot.utils.Utils
@@ -149,7 +147,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
                     if (message.isNotBlank()) {
                         val comment = Comment(id, getUserId(), userName, userUrlImage, matchId!!, message)
-                        mainViewModel.addComment(comment)
+                        mainViewModel.addComment(comment, null)
                         applicationContext.hideKeyboard(binding.detailsFragmentLayout)
                         closeAddCommentLayout()
                         binding.addCommentEditText.text?.clear()
@@ -161,7 +159,11 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         }
     }
 
-    override fun onClickedLike(commentId: String) { mainViewModel.updateLikeCount(commentId, getUserId()) }
+    override fun onClickedLike(commentId: String, forId: String) {
+        mainViewModel.getUser(getUserId()).observe(this, {
+            mainViewModel.updateLikeCount(commentId, getUserId(), it.name, forId)
+        })
+    }
 
     override fun onClickedComment(comment: Comment, imageTransition: View) { ReplyActivity.navigate(this, comment, imageTransition) }
 
@@ -169,7 +171,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onClickedItem(comment: Comment, imageTransition: View) { ReplyListActivity.navigate(this, comment, imageTransition) }
 
-    private fun getUserId() = FirebaseAuth.getInstance().currentUser!!.uid
+    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */

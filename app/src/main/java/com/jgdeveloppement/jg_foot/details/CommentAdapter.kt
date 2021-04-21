@@ -24,12 +24,11 @@ class CommentAdapter(private val context: FragmentActivity,
     : FirestoreRecyclerAdapter<Comment, CommentAdapter.ViewHolder>(options){
 
     interface OnCommentClicked{
-        fun onClickedLike(commentId: String)
+        fun onClickedLike(commentId: String, forId: String)
         fun onClickedComment(comment: Comment, imageTransition: View)
         fun onClickedDeleteButton(comment: Comment)
         fun onClickedItem(comment: Comment, imageTransition: View)
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.comment_item, parent, false)
@@ -64,7 +63,7 @@ class CommentAdapter(private val context: FragmentActivity,
         holder.commentMessage.text = model.comment
 
         //Click Listener
-        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(model.id) }
+        holder.likeButton.setOnClickListener { onCommentClicked.onClickedLike(model.id, model.userId) }
         holder.commentButton.setOnClickListener { onCommentClicked.onClickedComment(model, holder.avatar) }
         //delete
         if (model.userId == userId) {

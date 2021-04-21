@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
@@ -18,18 +19,23 @@ import com.google.android.material.badge.BadgeDrawable
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityHomeBinding
+import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.login.LoginActivity
+import com.jgdeveloppement.jg_foot.notification.NotificationAdapter
 import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.hideKeyboard
+import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 
 class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener, NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
     private var navController: NavController? = null
-    var notificationsBadge : View?  = null
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var badge: BadgeDrawable
 
 
 
@@ -44,15 +50,28 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         binding.navView.setNavigationItemSelectedListener(this)
         binding.bottomNavigationView.setupWithNavController(navController!!)
 
-        addBadge(2)
+        setupViewModel()
+        initBadge()
+        mainViewModel.getLiveNotificationCount(getUserId()) { addBadge() }
     }
 
-    private fun addBadge(count : Int) {
-        val badge: BadgeDrawable = binding.bottomNavigationView.getOrCreateBadge(R.id.messageFragment)
-        badge.number = count
+
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProviders.of(this, Injection.provideMainViewModelFactory()).get(MainViewModel::class.java)
+    }
+
+    private fun addBadge() {
+        mainViewModel.getNotificationCount(getUserId()).observe(this, {
+            badge.number = it.size
+            badge.isVisible = badge.number > 0
+        })
+    }
+
+    private fun initBadge(){
+        badge = binding.bottomNavigationView.getOrCreateBadge(R.id.messageFragment)
         badge.backgroundColor = resources.getColor(R.color.colorGold, null)
         badge.badgeTextColor = resources.getColor(R.color.colorWhite, null)
-        badge.isVisible = true
+
     }
 
     //  Configure Drawer Layout
@@ -72,8 +91,6 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         binding.searchView.setCursorDrawable(R.drawable.custom_cursor)
         binding.searchView.setSuggestions(resources.getStringArray(R.array.top_match_query))
         binding.searchView.setOnQueryTextListener(this)
-
-
         return true
     }
 
@@ -105,7 +122,6 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
                         .addOnSuccessListener { finish(); LoginActivity.navigate(this) }
             }
             else -> return false
-
         }
 
         binding.layoutDrawer.closeDrawer(GravityCompat.START)
@@ -123,6 +139,8 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
     override fun onQueryTextChange(newText: String?): Boolean {
         return false
     }
+
+    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */

@@ -1,12 +1,16 @@
 package com.jgdeveloppement.jg_foot.reply
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
@@ -38,7 +42,11 @@ class ReplyActivity : AppCompatActivity() {
         if (intent != null){
             if (intent.hasExtra(Utils.RC_COMMENT)){
                 finalComment = intent.extras?.get(Utils.RC_COMMENT) as Comment
-                initView()
+                mainViewModel.getUser(getUserId()).observe(this, {
+                    initCommentInView(finalComment!!, mainViewModel, this, binding.replyUserNameTextView, binding.replyCartBadgeLike,
+                        binding.replyDateTextView, binding.replyCommentTextView, binding.replyAvatarImageView, binding.replyLikeLayout,
+                        getUserId(), it.name)
+                })
                 addComment()
             }
         }
@@ -61,22 +69,6 @@ class ReplyActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initView(){
-        //Like And Comment
-        if (finalComment?.countLike == 0){
-            binding.replyCartBadgeLike.visibility = View.GONE
-        }else{
-            binding.replyCartBadgeLike.text = finalComment?.countLike.toString()
-            binding.replyCartBadgeLike.visibility = View.VISIBLE
-        }
-
-        //Comment
-        binding.replyUserNameTextView.text = finalComment?.userName
-        if (finalComment?.userUrlImage != "none") Glide.with(this).load(Uri.parse(finalComment?.userUrlImage)).circleCrop().into(binding.replyAvatarImageView)
-        binding.replyDateTextView.text = finalComment?.createdAt?.let { Utils.getFormatDateTime(it) }
-        binding.replyCommentTextView.text = finalComment?.comment
-    }
-
     private fun addComment(){
         binding.replyAddButton.setOnClickListener {
             val badWord = resources.getStringArray(R.array.bad_word)
@@ -92,20 +84,18 @@ class ReplyActivity : AppCompatActivity() {
 
                     if (message.isNotBlank()) {
                         val comment = Comment(id, userId, userName, userUrlImage, finalComment!!.id, message)
-                        mainViewModel.addComment(comment)
+                        mainViewModel.addComment(comment, finalComment)
                         Utils.haveReply = true
-                        mainViewModel.updateCommentCount(finalComment!!.id)
                         onBackPressed()
                     }
                 })
             }else{
                 BadWordPopup(this).show()
             }
-
         }
     }
 
-    private fun getUserId() = FirebaseAuth.getInstance().currentUser!!.uid
+    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */
@@ -114,6 +104,26 @@ class ReplyActivity : AppCompatActivity() {
             intent.putExtra(Utils.RC_COMMENT, finalComment as Serializable)
             val options = ActivityOptions.makeSceneTransitionAnimation(activity, viewClicked, activity!!.getString(R.string.transition_animation_comment))
             ActivityCompat.startActivity(activity, intent, options.toBundle())
+        }
+
+        fun initCommentInView(comment: Comment, mainViewModel: MainViewModel, context: Context, userName: TextView, countLike: TextView, date: TextView,
+                              message: TextView, avatar: ImageView, likeLayout: FrameLayout, userId: String, displayName: String){
+
+            if (comment.countLike == 0){
+                countLike.visibility = View.GONE
+            }else{
+                countLike.text = comment.countLike.toString()
+                countLike.visibility = View.VISIBLE
+            }
+            userName.text = comment.userName
+            if (comment.userUrlImage != "none") Glide.with(context).load(Uri.parse(comment.userUrlImage)).circleCrop().into(avatar)
+            date.text =  Utils.getFormatDateTime(comment.createdAt)
+            message.text = comment.comment
+
+//            likeLayout.setOnClickListener {
+//                mainViewModel.updateLikeCount(comment.id, userId, displayName, comment.userId)
+//                mainViewModel.getComment(comment.id).
+//            }
         }
     }
 }

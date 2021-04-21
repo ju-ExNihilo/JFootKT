@@ -44,7 +44,14 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         if (intent != null){
             if (intent.hasExtra(Utils.RC_COMMENT)){
                 finalComment = intent.extras?.get(Utils.RC_COMMENT) as Comment
-                initView()
+                mainViewModel.getUser(getUserId()).observe(this, {
+                    ReplyActivity.initCommentInView(finalComment!!, mainViewModel, this, binding.replyListUserNameTextView, binding.replyListCartBadgeLike,
+                        binding.replyListDateTextView, binding.replyListCommentTextView, binding.replyListAvatarImageView, binding.replyListLikeLayout,
+                        getUserId(), it.name)
+                })
+
+                initCommentList()
+                addComment()
                 initAddCommentLayout()
                 addComment()
             }
@@ -81,23 +88,6 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initView(){
-        //Like And Comment
-        if (finalComment?.countLike == 0){
-            binding.replyListCartBadgeLike.visibility = View.GONE
-        }else{
-            binding.replyListCartBadgeLike.text = finalComment?.countLike.toString()
-            binding.replyListCartBadgeLike.visibility = View.VISIBLE
-        }
-
-        //Comment
-        binding.replyListUserNameTextView.text = finalComment?.userName
-        if (finalComment?.userUrlImage != "none") Glide.with(this).load(Uri.parse(finalComment?.userUrlImage)).circleCrop().into(binding.replyListAvatarImageView)
-        binding.replyListDateTextView.text = finalComment?.createdAt?.let { Utils.getFormatDateTime(it) }
-        binding.replyListCommentTextView.text = finalComment?.comment
-        initCommentList()
     }
 
     private fun initCommentList(){
@@ -137,8 +127,7 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
                     if (message.isNotBlank()) {
                         val comment = Comment(id, getUserId(), userName, userUrlImage, finalComment!!.id, message)
-                        mainViewModel.addComment(comment)
-                        mainViewModel.updateCommentCount(finalComment!!.id)
+                        mainViewModel.addComment(comment, finalComment)
                         applicationContext.hideKeyboard(binding.replyListFragmentLayout)
                         closeAddCommentLayout()
                         binding.replyListAddCommentEditText.text?.clear()
@@ -150,17 +139,19 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         }
     }
 
-    override fun onClickedLike(commentId: String) { mainViewModel.updateLikeCount(commentId, getUserId()) }
+    override fun onClickedLike(commentId: String, forId: String) {
+        mainViewModel.getUser(getUserId()).observe(this, {
+            mainViewModel.updateLikeCount(commentId, getUserId(), it.name, forId)
+        })
+    }
 
     override fun onClickedComment(comment: Comment, imageTransition: View) { ReplyActivity.navigate(this, comment, imageTransition) }
 
     override fun onClickedDeleteButton(comment: Comment) { mainViewModel.deleteComment(comment) }
 
-    override fun onClickedItem(comment: Comment, imageTransition: View) {
-        navigate(this, comment, imageTransition)
-    }
+    override fun onClickedItem(comment: Comment, imageTransition: View) { navigate(this, comment, imageTransition) }
 
-    private fun getUserId() = FirebaseAuth.getInstance().currentUser!!.uid
+    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */

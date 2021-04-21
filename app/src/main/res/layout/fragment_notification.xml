@@ -97,6 +97,18 @@
                                     style="@style/TitleDefaultStyle"
                                     android:textSize="@dimen/message_title_text_size"/>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/notification__recycler_view"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                app:layout_constraintTop_toBottomOf="@+id/notification_title_image"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginTop="@dimen/recycler_view_margin_top"
+                                tools:listitem="@layout/notification_item"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

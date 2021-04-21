@@ -51,6 +51,7 @@
 
     <!-- Matches List String -->
     <string name="nothing_found_message">Désolé aucun match trouvé</string>
+    <string name="reply">Réponse</string>
     <!-- Matches List String End -->
 
     <!-- Matches Item String -->
@@ -64,6 +65,8 @@
 
     <!-- Message String -->
     <string name="mes_notifications">Mes Notifications</string>
+    <string name="like_notification">à aimé votre commentaire</string>
+    <string name="reply_notification">à répondu à votre commentaire</string>
     <!-- Message String End -->
 
     <!-- Bottom Nav String -->
@@ -71,7 +74,6 @@
     <string name="scores">Scores</string>
     <string name="conversation">Conversation</string>
     <string name="add">Ajouter</string>
-    <string name="reply">Réponse</string>
     <!-- Bottom Nav String End -->
 
     <!-- Bad Word array -->
