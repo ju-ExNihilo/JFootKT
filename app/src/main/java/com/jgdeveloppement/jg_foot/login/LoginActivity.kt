@@ -103,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
             val id = currentUser.uid
             val name = if (currentUser.displayName != null) currentUser.displayName else "none"
             val avatarUrl = if (currentUser.photoUrl != null) currentUser.photoUrl!!.toString() else "none"
-            val user = User(id, name , avatarUrl)
+            val user = User(id, name , avatarUrl, "none")
             mainViewModel.addUser(user)
         }
 

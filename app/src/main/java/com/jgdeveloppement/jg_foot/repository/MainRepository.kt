@@ -4,8 +4,12 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.firepush.Fire
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jgdeveloppement.jg_foot.models.*
 import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.commentRef
 import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.likedRef
@@ -14,6 +18,7 @@ import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.userRef
 import com.jgdeveloppement.jg_foot.retrofit.ApiHelper
 import com.jgdeveloppement.jg_foot.retrofit.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 class MainRepository(private val apiHelper: ApiHelper) {
@@ -53,6 +58,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
                 val notificationId = getNotificationReferenceId(fromComment.userId)
                 val notification = Notification(notificationId, comment.userName, comment.id, false, fromComment.id, false, Date())
                 addNotification(fromComment.userId, notification)
+                sendNotification(fromComment.userId, comment.userName, " à répondu à votre commentaire")
             }
         }
     }
@@ -90,9 +96,46 @@ class MainRepository(private val apiHelper: ApiHelper) {
                 } else{
                     deleteLiked(commentId, userId)
                     decrementLike(commentId)
+                    sendNotification(forId, userName, "à aimé votre commentaire")
                 }
             }
         }
+    }
+
+    fun updateLikeCount(commentId: String, userId: String, userName: String, forId: String, callback: ()->Unit){
+        likedRef(commentId).get().addOnCompleteListener { likedTask: Task<QuerySnapshot> ->
+            if (likedTask.isSuccessful){
+                val likedList = likedTask.result!!.toObjects(Liked::class.java)
+                val haveLike = likedList.filter { it.userId.equals(userId, ignoreCase = true) }
+
+                if (haveLike.isEmpty()) {
+                    val liked = Liked(userId)
+                    addLiked(commentId, liked)
+                    incrementLike(commentId)
+                    if (userId != forId) {
+                        val notification = Notification(commentId, userName, commentId, true, "none", false, Date())
+                        addNotification(forId, notification)
+                        sendNotification(forId, userName, "à aimé votre commentaire")
+                    }
+                } else{
+                    deleteLiked(commentId, userId)
+                    decrementLike(commentId)
+                }
+                callback()
+            }
+        }
+    }
+
+    private fun sendNotification(userId: String, userName: String, textNotification: String) {
+        userRef.document(userId).get().addOnCompleteListener { task: Task<DocumentSnapshot> ->
+            if (task.isSuccessful) {
+                val user = task.result!!.toObject(User::class.java)
+                user?.token?.let {
+                    if (it != "none") Fire.create().setTitle("JFoot-Notification").setBody("$userName $textNotification").toIds(it).push()
+                }
+            }
+        }
+
     }
 
     //Get
@@ -170,5 +213,15 @@ class MainRepository(private val apiHelper: ApiHelper) {
                         if (dc.type == DocumentChange.Type.ADDED || dc.type == DocumentChange.Type.REMOVED) callback()
                     }
                 }
+    }
+
+    fun registerToken(userId: String){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            FirebaseFirestore.getInstance().collection("user").document(userId).update("token", token)
+        })
     }
 }

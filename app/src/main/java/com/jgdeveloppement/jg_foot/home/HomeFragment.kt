@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
                     }
                     Status.ERROR -> {
                         binding.homeProgressLayout.visibility = View.GONE
-                        Utils.showSnackBar(binding.homeFragmentLayout, getString(R.string.error_occurred))
+                        Utils.showSnackBar(binding.homeFragmentLayout, getString(R.string.error_no_internet))
                     }
                     Status.LOADING -> {
                         binding.homeProgressLayout.visibility = View.VISIBLE

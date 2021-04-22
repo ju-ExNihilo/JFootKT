@@ -78,17 +78,21 @@
 
     <!-- Bad Word array -->
     <string-array name="bad_word">
-        <item>connard</item>
-        <item>conard</item>
-        <item>pd</item>
-        <item>enculé</item>
-        <item>va te faire</item>
-        <item>va te faire foutre</item>
-        <item>salaupe</item>
-        <item>salope</item>
-        <item>pétasse</item>
-        <item>pute</item>
-        <item>fils de</item>
+        <item> connard </item>
+        <item> conard </item>
+        <item> sale pd </item>
+        <item> gros pd </item>
+        <item> petit pd </item>
+        <item> tapette </item>
+        <item> enculé </item>
+        <item> va te faire </item>
+        <item> va te faire foutre </item>
+        <item> salaupe </item>
+        <item> salope </item>
+        <item> salop </item>
+        <item> pétasse </item>
+        <item> pute </item>
+        <item> fils de </item>
     </string-array>
     <!-- Bad Word array End -->
 

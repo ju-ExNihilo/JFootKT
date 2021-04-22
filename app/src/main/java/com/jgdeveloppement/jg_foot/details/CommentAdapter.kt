@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,6 +21,7 @@ import com.jgdeveloppement.jg_foot.utils.Utils
 class CommentAdapter(private val context: FragmentActivity,
                      options: FirestoreRecyclerOptions<Comment>,
                      private val userId: String,
+                     private val fromNotificationId: String?,
                      private val onCommentClicked: OnCommentClicked)
     : FirestoreRecyclerAdapter<Comment, CommentAdapter.ViewHolder>(options){
 
@@ -37,6 +39,9 @@ class CommentAdapter(private val context: FragmentActivity,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Comment)  {
 
+        if (fromNotificationId == model.id){
+            holder.commentCard.setCardBackgroundColor(context.getColor(R.color.colorGrayLight))
+        }
         //Count
         if (model.countLike == 0){
             holder.countLike.visibility = View.GONE
@@ -76,6 +81,8 @@ class CommentAdapter(private val context: FragmentActivity,
         holder.itemView.setOnClickListener { onCommentClicked.onClickedItem(model, holder.avatar) }
     }
 
+
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val countComment : TextView = view.findViewById(R.id.cart_badge_comment)
         val countLike : TextView = view.findViewById(R.id.cart_badge_like)
@@ -86,5 +93,8 @@ class CommentAdapter(private val context: FragmentActivity,
         val deleteButton : ImageButton = view.findViewById(R.id.delete_button)
         val likeButton : FrameLayout = view.findViewById(R.id.like_layout)
         val commentButton : FrameLayout = view.findViewById(R.id.comment_layout)
+        val commentCard : CardView = view.findViewById(R.id.comment_item_card_layout)
+
+
     }
 }

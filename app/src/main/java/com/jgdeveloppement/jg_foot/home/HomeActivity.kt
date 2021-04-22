@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.firebase.ui.auth.AuthUI
+import com.firepush.Fire
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -43,6 +44,7 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Fire.init("AAAAbNfxLIA:APA91bEfDxF6kTCpMGnXSb1CooCgLL6cErx07qDq7hKe_sm2YN265Ldg_VMYcf6ewU_h7vSq0AYRSy_RulIZgPlfEGKxOLdgGNGSZYJJMAMfskE9eWl1axWyUxqjfB4In8scxDLEmKQA")
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setSupportActionBar(binding.toolbar)
         configureDrawerLayout()
@@ -53,6 +55,8 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         setupViewModel()
         initBadge()
         mainViewModel.getLiveNotificationCount(getUserId()) { addBadge() }
+
+        initToken()
     }
 
 
@@ -72,6 +76,12 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         badge.backgroundColor = resources.getColor(R.color.colorGold, null)
         badge.badgeTextColor = resources.getColor(R.color.colorWhite, null)
 
+    }
+
+    private fun initToken(){
+        mainViewModel.getUser(getUserId()).observe(this, { user ->
+            if (user.token == "none") mainViewModel.registerToken(user.id)
+        })
     }
 
     //  Configure Drawer Layout

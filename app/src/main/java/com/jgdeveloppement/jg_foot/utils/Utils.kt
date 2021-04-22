@@ -22,6 +22,7 @@ object Utils {
     const val RC_MATCH_ID = "RC_MATCH_ID"
     const val RC_COMMENT = "RC_COMMENT"
     const val RC_FROM = "RC_FROM"
+    const val RC_FROM_NOTIFICATION = "RC_FROM_NOTIFICATION"
     const val TOP_MATCHES = "TOP_MATCHES"
     const val ALL_MATCHES = "ALL_MATCHES"
     const val LIGUE_1 = "FRANCE: Ligue 1"

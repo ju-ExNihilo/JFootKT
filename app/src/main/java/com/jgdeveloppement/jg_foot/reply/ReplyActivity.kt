@@ -42,12 +42,10 @@ class ReplyActivity : AppCompatActivity() {
         if (intent != null){
             if (intent.hasExtra(Utils.RC_COMMENT)){
                 finalComment = intent.extras?.get(Utils.RC_COMMENT) as Comment
-                mainViewModel.getUser(getUserId()).observe(this, {
-                    initCommentInView(finalComment!!, mainViewModel, this, binding.replyUserNameTextView, binding.replyCartBadgeLike,
-                        binding.replyDateTextView, binding.replyCommentTextView, binding.replyAvatarImageView, binding.replyLikeLayout,
-                        getUserId(), it.name)
-                })
+                initCommentInView(finalComment!!,this, binding.replyUserNameTextView, binding.replyCartBadgeLike,
+                    binding.replyDateTextView, binding.replyCommentTextView, binding.replyAvatarImageView)
                 addComment()
+                onClickLike()
             }
         }
     }
@@ -67,6 +65,16 @@ class ReplyActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun onClickLike(){
+        binding.replyLikeLayout.setOnClickListener {
+            mainViewModel.getUser(getUserId()).observe(this, { user ->
+                mainViewModel.updateLikeCount(finalComment!!.id, user.id, user.name, finalComment!!.userId){
+                    mainViewModel.getComment(finalComment!!.id).observe(this, { initCountLike(it, binding.replyCartBadgeLike) })
+                }
+            })
+        }
     }
 
     private fun addComment(){
@@ -95,7 +103,7 @@ class ReplyActivity : AppCompatActivity() {
         }
     }
 
-    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
+    private fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */
@@ -106,24 +114,24 @@ class ReplyActivity : AppCompatActivity() {
             ActivityCompat.startActivity(activity, intent, options.toBundle())
         }
 
-        fun initCommentInView(comment: Comment, mainViewModel: MainViewModel, context: Context, userName: TextView, countLike: TextView, date: TextView,
-                              message: TextView, avatar: ImageView, likeLayout: FrameLayout, userId: String, displayName: String){
-
+        fun initCountLike(comment: Comment, countLike: TextView){
             if (comment.countLike == 0){
                 countLike.visibility = View.GONE
             }else{
                 countLike.text = comment.countLike.toString()
                 countLike.visibility = View.VISIBLE
             }
+        }
+
+        fun initCommentInView(comment: Comment, context: Context, userName: TextView, countLike: TextView, date: TextView,
+                              message: TextView, avatar: ImageView){
+
+            initCountLike(comment, countLike)
             userName.text = comment.userName
             if (comment.userUrlImage != "none") Glide.with(context).load(Uri.parse(comment.userUrlImage)).circleCrop().into(avatar)
             date.text =  Utils.getFormatDateTime(comment.createdAt)
             message.text = comment.comment
 
-//            likeLayout.setOnClickListener {
-//                mainViewModel.updateLikeCount(comment.id, userId, displayName, comment.userId)
-//                mainViewModel.getComment(comment.id).
-//            }
         }
     }
 }

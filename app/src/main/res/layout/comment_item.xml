@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/comment_item_card_layout"
         app:cardCornerRadius="@dimen/comment_item_default_dimen"
         android:elevation="@dimen/comment_item_default_dimen"
         android:layout_marginStart="@dimen/comment_item_default_dimen"

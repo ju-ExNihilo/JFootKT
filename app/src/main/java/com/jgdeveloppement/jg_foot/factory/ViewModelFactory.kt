@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.jgdeveloppement.jg_foot.repository.MainRepository
 import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val mainRepository: MainRepository) : ViewModelProvider.Factory {
-
+    
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)){
             return MainViewModel(mainRepository) as T

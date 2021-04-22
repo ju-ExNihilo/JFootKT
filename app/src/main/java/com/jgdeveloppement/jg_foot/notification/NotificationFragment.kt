@@ -77,9 +77,10 @@ class NotificationFragment : Fragment(), NotificationAdapter.OnNotificationClick
     }
 
     override fun onClickedItem(notification: Notification, imageTransition: View) {
-        mainViewModel.getComment(notification.commentId).observe(viewLifecycleOwner, {
+        val id = if (notification.liked) notification.commentId else notification.replyCommentId
+        mainViewModel.getComment(id).observe(viewLifecycleOwner, {
             if (it != null){
-                ReplyListActivity.navigate(activity, it, imageTransition)
+                ReplyListActivity.navigate(activity, it, imageTransition, notification.commentId)
             }else{
                 showSnackBar(binding.notificationFragmentLayout, "Désolé le message à était supprimé")
             }

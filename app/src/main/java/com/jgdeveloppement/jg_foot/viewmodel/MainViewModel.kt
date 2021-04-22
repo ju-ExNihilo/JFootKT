@@ -25,6 +25,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     //Like
     fun updateLikeCount(commentId: String, userId: String, userName: String, forId: String) = mainRepository.updateLikeCount(commentId, userId, userName, forId)
+    fun updateLikeCount(commentId: String, userId: String, userName: String, forId: String, callback: ()->Unit) =
+        mainRepository.updateLikeCount(commentId, userId, userName, forId, callback)
 
     //Notification
     fun getLiveNotifications(userId: String) = mainRepository.getLiveNotifications(userId)
@@ -33,4 +35,5 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     fun deleteNotification(userId: String, notificationId: String) = mainRepository.deleteNotification(userId, notificationId)
     fun updateNotification(userId: String) = mainRepository.updateNotification(userId)
     fun getComment(commentId: String) = mainRepository.getComment(commentId)
+    fun registerToken(userId: String) = mainRepository.registerToken(userId)
 }

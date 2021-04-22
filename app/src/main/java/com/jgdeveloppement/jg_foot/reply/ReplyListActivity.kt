@@ -21,6 +21,7 @@ import com.jgdeveloppement.jg_foot.dialog.BadWordPopup
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.models.Comment
 import com.jgdeveloppement.jg_foot.utils.Utils
+import com.jgdeveloppement.jg_foot.utils.Utils.RC_FROM_NOTIFICATION
 import com.jgdeveloppement.jg_foot.utils.Utils.hideKeyboard
 import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
 import com.konifar.fab_transformation.FabTransformation
@@ -32,6 +33,7 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     private lateinit var mainViewModel: MainViewModel
     private var finalComment: Comment? = null
     private var adapter: CommentAdapter? = null
+    private var fromNotificationId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +46,15 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
         if (intent != null){
             if (intent.hasExtra(Utils.RC_COMMENT)){
                 finalComment = intent.extras?.get(Utils.RC_COMMENT) as Comment
-                mainViewModel.getUser(getUserId()).observe(this, {
-                    ReplyActivity.initCommentInView(finalComment!!, mainViewModel, this, binding.replyListUserNameTextView, binding.replyListCartBadgeLike,
-                        binding.replyListDateTextView, binding.replyListCommentTextView, binding.replyListAvatarImageView, binding.replyListLikeLayout,
-                        getUserId(), it.name)
-                })
+                fromNotificationId = intent.extras?.getString(RC_FROM_NOTIFICATION)
+                ReplyActivity.initCommentInView(finalComment!!,  this, binding.replyListUserNameTextView, binding.replyListCartBadgeLike,
+                    binding.replyListDateTextView, binding.replyListCommentTextView, binding.replyListAvatarImageView)
 
                 initCommentList()
                 addComment()
                 initAddCommentLayout()
                 addComment()
+                onClickLike()
             }
         }
     }
@@ -93,7 +94,7 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     private fun initCommentList(){
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         binding.replyListRecyclerView.animation = fadeIn
-        adapter = CommentAdapter(this, mainViewModel.getLiveAllComment(finalComment!!.id), getUserId(), this)
+        adapter = CommentAdapter(this, mainViewModel.getLiveAllComment(finalComment!!.id), getUserId(), fromNotificationId, this)
         binding.replyListRecyclerView.adapter = adapter
         adapter!!.startListening()
     }
@@ -111,6 +112,18 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     private fun closeAddCommentLayout(){
         FabTransformation.with(binding.replyListAddFloatingButton).transformFrom(binding.replyListAddCommentLayout as View)
         binding.replyListRecyclerView.visibility = View.VISIBLE
+    }
+
+    private fun onClickLike(){
+        binding.replyListLikeLayout.setOnClickListener {
+            mainViewModel.getUser(getUserId()).observe(this, { user ->
+                mainViewModel.updateLikeCount(finalComment!!.id, user.id, user.name, finalComment!!.userId){
+                    mainViewModel.getComment(finalComment!!.id).observe(this, {
+                        ReplyActivity.initCountLike(it, binding.replyListCartBadgeLike)
+                    })
+                }
+            })
+        }
     }
 
     private fun addComment(){
@@ -149,15 +162,16 @@ class ReplyListActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onClickedDeleteButton(comment: Comment) { mainViewModel.deleteComment(comment) }
 
-    override fun onClickedItem(comment: Comment, imageTransition: View) { navigate(this, comment, imageTransition) }
+    override fun onClickedItem(comment: Comment, imageTransition: View) { navigate(this, comment, imageTransition, "none") }
 
-    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
+    private fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */
-        fun navigate(activity: FragmentActivity?, finalComment: Comment, viewClicked: View) {
+        fun navigate(activity: FragmentActivity?, finalComment: Comment, viewClicked: View, fromNotificationId: String) {
             val intent = Intent(activity, ReplyListActivity::class.java)
             intent.putExtra(Utils.RC_COMMENT, finalComment as Serializable)
+            intent.putExtra(RC_FROM_NOTIFICATION, fromNotificationId)
             val options = ActivityOptions.makeSceneTransitionAnimation(activity, viewClicked, activity!!.getString(R.string.transition_animation_comment))
             ActivityCompat.startActivity(activity, intent, options.toBundle())
         }

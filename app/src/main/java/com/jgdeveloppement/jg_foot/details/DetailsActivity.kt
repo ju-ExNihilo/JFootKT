@@ -113,7 +113,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
     private fun initCommentList(){
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         binding.commentRecyclerView.animation = fadeIn
-        adapter = CommentAdapter(this, mainViewModel.getLiveAllComment(matchId!!), getUserId(), this)
+        adapter = CommentAdapter(this, mainViewModel.getLiveAllComment(matchId!!), getUserId(), "none", this)
         binding.commentRecyclerView.adapter = adapter
         adapter!!.startListening()
     }
@@ -169,9 +169,9 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onClickedDeleteButton(comment: Comment) { mainViewModel.deleteComment(comment) }
 
-    override fun onClickedItem(comment: Comment, imageTransition: View) { ReplyListActivity.navigate(this, comment, imageTransition) }
+    override fun onClickedItem(comment: Comment, imageTransition: View) { ReplyListActivity.navigate(this, comment, imageTransition, "none") }
 
-    fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
+    private fun getUserId(): String = FirebaseAuth.getInstance().currentUser!!.uid
 
     companion object {
         /** Used to navigate to this activity  */

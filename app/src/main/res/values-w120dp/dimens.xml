@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Progress Layout Card -->
+    <dimen name="progress_layout_elevation">25dp</dimen>
+    <dimen name="progress_bar_size">80dp</dimen>
+    <!-- Progress Layout Card -->
+
+    <!-- Material Card -->
+    <dimen name="default_card_min_height">750dp</dimen>
+    <dimen name="default_card_elevation">20dp</dimen>
+    <dimen name="default_card_margin_top">8dp</dimen>
+    <dimen name="login_card_margin_top">32dp</dimen>
+    <dimen name="default_top_image_height">250dp</dimen>
+    <!-- Material Card End -->
+
+    <!-- Login Layout -->
+    <dimen name="login_button_height">70dp</dimen>
+    <dimen name="login_button_mail_margin_top">40dp</dimen>
+    <dimen name="login_button_horizontal_margin">32dp</dimen>
+    <dimen name="login_button_text_size">18sp</dimen>
+    <dimen name="login_button_radius">10dp</dimen>
+    <dimen name="login_button_elevation">10dp</dimen>
+    <dimen name="login_button_google_margin_top">16dp</dimen>
+    <dimen name="login_title_text_size">80sp</dimen>
+    <dimen name="login_title_horizontal_margin">24dp</dimen>
+    <dimen name="login_image_height">400dp</dimen>
+    <!-- Login Layout End -->
+
+    <!-- Home Layout -->
+    <dimen name="default_image_title_size">50dp</dimen>
+    <dimen name="default_image_title_margin_start">8dp</dimen>
+    <dimen name="default_image_title_margin_top">16dp</dimen>
+    <dimen name="default_title_text_size">30sp</dimen>
+    <dimen name="default_title_margin_start">16dp</dimen>
+    <dimen name="recycler_view_margin_top">24dp</dimen>
+    <dimen name="ball_image_view_size">40dp</dimen>
+    <dimen name="ball_image_view_margin_top">24dp</dimen>
+    <dimen name="ball_image_view_margin_start">16dp</dimen>
+    <dimen name="next_button_margin">8dp</dimen>
+    <dimen name="match_item_home_width">200dp</dimen>
+    <dimen name="match_item_home_height">150dp</dimen>
+    <!-- Home Layout End -->
+
+    <!-- Matches List Layout -->
+    <dimen name="nothing_found_text_size">24sp</dimen>
+    <dimen name="match_item_list_width">130dp</dimen>
+    <dimen name="match_item_list_height">90dp</dimen>
+    <!-- Matches List Layout End -->
+
+    <!-- Matches Item Layout -->
+    <dimen name="match_item_home_margin">8dp</dimen>
+    <dimen name="match_item_home_radius">15dp</dimen>
+    <dimen name="match_item_home_elevation">10dp</dimen>
+    <dimen name="match_item_home_text_size">18sp</dimen>
+    <dimen name="dom_team_margin_top">16dp</dimen>
+    <dimen name="ext_team_margin_bottom">16dp</dimen>
+    <!-- Matches Item Layout End -->
+
+    <!-- Nav Header/View Layout -->
+    <dimen name="nav_header_image_margin_top">24dp</dimen>
+    <dimen name="nav_header_title_text_size">50sp</dimen>
+    <dimen name="nav_header_height">450dp</dimen>
+    <dimen name="nav_view_icon_size">40dp</dimen>
+    <dimen name="nav_view_padding">10dp</dimen>
+    <!-- Nav Header/View Layout End -->
+
+    <!-- Details Layout -->
+    <dimen name="details_title_text_size">18sp</dimen>
+    <dimen name="details_ball_image_view_size">30dp</dimen>
+    <dimen name="details_web_view_margin_top">24dp</dimen>
+    <dimen name="match_title_land_text_size">30sp</dimen>
+    <dimen name="message_title_text_size">24sp</dimen>
+    <!-- Details Layout End -->
+
+    <!-- Comment Item Layout -->
+    <dimen name="comment_item_default_dimen">10dp</dimen>
+    <dimen name="comment_item_avatar_size">70dp</dimen>
+    <dimen name="comment_item_avatar_margin_start">8dp</dimen>
+    <dimen name="comment_item_avatar_vertical_margin">16dp</dimen>
+    <dimen name="comment_item_user_name_margin_start">16dp</dimen>
+    <dimen name="comment_item_user_name_margin_top">8dp</dimen>
+    <dimen name="comment_item_user_name_text_size">18sp</dimen>
+    <dimen name="comment_item_date_margin_start">16dp</dimen>
+    <dimen name="comment_item_date_margin_top">2dp</dimen>
+    <dimen name="comment_item_date_margin_bottom">3dp</dimen>
+    <dimen name="comment_item_date_text_size">10sp</dimen>
+    <dimen name="comment_item_delete_button_width">30dp</dimen>
+    <dimen name="comment_item_delete_button_margin_end">8dp</dimen>
+    <dimen name="comment_item_frame_layout_comment_margin_end">5dp</dimen>
+    <dimen name="comment_item_frame_layout_size">20dp</dimen>
+    <dimen name="comment_item_frame_layout_text_size">10sp</dimen>
+    <dimen name="comment_item_message_margin">8dp</dimen>
+    <!-- Comment Item Layout End -->
+
+</resources>
