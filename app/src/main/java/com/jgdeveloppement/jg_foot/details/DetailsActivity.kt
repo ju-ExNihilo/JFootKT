@@ -54,6 +54,7 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
                 matchId = intent.getStringExtra(RC_MATCH_ID)
 
                 binding.detailsMatchTitle.text = matchTitle
+
                 binding.detailsWebView.webViewClient =  MyWebViewClient(this)
                 binding.detailsWebView.loadUrl(matchUrl)
                 binding.detailsWebView.settings.allowContentAccess = true
@@ -72,6 +73,17 @@ class DetailsActivity : AppCompatActivity(), CommentAdapter.OnCommentClicked {
 
     override fun onResume() {
         super.onResume()
+        Utils.isConnected { ok ->
+            if (ok){
+                binding.detailsWebView.visibility = View.VISIBLE
+                binding.noInternetImage.visibility = View.INVISIBLE
+            }
+            else{
+                binding.detailsWebView.visibility = View.INVISIBLE
+                binding.noInternetImage.visibility = View.VISIBLE
+            }
+        }
+
         if (Utils.haveReply){
             Utils.haveReply = false
             Utils.showSnackBar(binding.detailsFragmentLayout, getString(R.string.reply_been_send))

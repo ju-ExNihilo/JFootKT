@@ -31,9 +31,20 @@ class LiveFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        //Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
-        //bottomNavigationView.menu.getItem(1).isChecked = true
+        val bottomNavigationView = (activity as AppCompatActivity?)!!.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        Utils.unSelectBottomNavigationItem(bottomNavigationView, true)
+        bottomNavigationView.menu.getItem(1).isChecked = true
+
+        Utils.isConnected { ok ->
+            if (ok){
+                binding.liveScoreView.visibility = View.VISIBLE
+                binding.noInternetImage.visibility = View.GONE
+            }
+            else{
+                binding.liveScoreView.visibility = View.GONE
+                binding.noInternetImage.visibility = View.VISIBLE
+            }
+        }
     }
 
 
@@ -46,6 +57,4 @@ class LiveFragment : Fragment() {
         binding.liveScoreView.settings.javaScriptEnabled = true
 
     }
-
-
 }

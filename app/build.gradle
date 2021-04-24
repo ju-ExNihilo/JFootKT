@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-
+        resValue "string", "google_cloud_messaging_key", (project.findProperty("GOOGLE_CLOUD_MESSAGING_KEY") ?: "")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

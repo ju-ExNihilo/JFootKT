@@ -2,7 +2,6 @@ package com.jgdeveloppement.jg_foot.webview
 
 import android.view.View
 import android.webkit.WebChromeClient
-import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.core.widget.NestedScrollView
 

@@ -2,7 +2,6 @@ package com.jgdeveloppement.jg_foot.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.jgdeveloppement.jg_foot.models.Comment
-import com.jgdeveloppement.jg_foot.models.Notification
 import com.jgdeveloppement.jg_foot.models.User
 import com.jgdeveloppement.jg_foot.repository.MainRepository
 

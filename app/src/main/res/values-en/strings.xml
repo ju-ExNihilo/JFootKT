@@ -7,23 +7,23 @@
     <string name="default_image_title_description">JFoot image title</string>
     <string name="default_image_next_button_description">Next Button</string>
     <string name="match_item_image_description">match item image description</string>
-    <string name="error_unknown_error">Désolé une erreur est survenue</string>
-    <string name="error_no_internet">Internet est requis</string>
-    <string name="error_authentication_canceled">L\'authentification a était annulée</string>
+    <string name="error_unknown_error">Sorry an error occurred</string>
+    <string name="error_no_internet">Internet is required</string>
+    <string name="error_authentication_canceled">Authentication was cancelled</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="transition_animation">transition_animation</string>
     <string name="transition_animation_comment">transition_animation_comment</string>
-    <string name="reply_been_send">Votre réponse à bien était envoyé</string>
+    <string name="reply_been_send">Your reply have been sent</string>
     <string name="no_internet_image">No internet image</string>
-    <string name="search">Recherche</string>
-    <string name="sorry_deleted_message">Désolé le message à était supprimé</string>
+    <string name="search">Search</string>
+    <string name="sorry_deleted_message">Sorry this message have been deleted</string>
     <!-- Utils String End -->
 
     <!-- Login String -->
-    <string name="connexion_by_mail">Connexion Avec Email</string>
-    <string name="connexion_by_google">Connexion Avec Google</string>
-    <string name="error_occurred">Désolé une erreur est survenue</string>
+    <string name="connexion_by_mail">Connexion by Email</string>
+    <string name="connexion_by_google">Connexion by Google</string>
+    <string name="error_occurred">Sorry an error occurred</string>
     <!-- Login String End -->
 
     <!-- Top Match array -->
@@ -48,13 +48,13 @@
     <!-- Top Match array End -->
 
     <!-- Home String -->
-    <string name="top_matchs">Top Matchs</string>
-    <string name="matchs">Matchs</string>
+    <string name="top_matchs">Top Matches</string>
+    <string name="matchs">All Matches</string>
     <!-- Home String End -->
 
     <!-- Matches List String -->
     <string name="nothing_found_message">Désolé aucun match trouvé</string>
-    <string name="reply">Réponse</string>
+    <string name="reply">Reply</string>
     <!-- Matches List String End -->
 
     <!-- Matches Item String -->
@@ -62,21 +62,21 @@
     <!-- Matches Item String End -->
 
     <!-- Details String -->
-    <string name="commentaires">Commentaires</string>
-    <string name="your_comment">Votre Commentaire</string>
+    <string name="commentaires">Comment</string>
+    <string name="your_comment">Your Comment</string>
     <!-- Details String End -->
 
     <!-- Message String -->
-    <string name="mes_notifications">Mes Notifications</string>
-    <string name="like_notification">a aimé votre commentaire</string>
-    <string name="reply_notification">a répondu à votre commentaire</string>
+    <string name="mes_notifications">My Notifications</string>
+    <string name="like_notification">liked your comment</string>
+    <string name="reply_notification">responded to your comment</string>
     <!-- Message String End -->
 
     <!-- Bottom Nav String -->
-    <string name="accueil">Accueil</string>
+    <string name="accueil">Home</string>
     <string name="scores">Scores</string>
     <string name="conversation">Conversation</string>
-    <string name="add">Ajouter</string>
+    <string name="add">Add</string>
     <!-- Bottom Nav String End -->
 
     <!-- Bad Word String -->
@@ -97,8 +97,8 @@
         <item> pute </item>
         <item> fils de </item>
     </string-array>
-    <string name="bad_word_popup_text">Restons Courtois !!</string>
-    <string name="bad_word_popup_text_button">Compris</string>
+    <string name="bad_word_popup_text">Please be civil !!</string>
+    <string name="bad_word_popup_text_button">Get it</string>
     <!-- Bad Word String End -->
 
 </resources>

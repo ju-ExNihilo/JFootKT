@@ -13,31 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Loading panel -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/live_progress_layout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/grayTransparent"
-                android:elevation="@dimen/progress_layout_elevation">
-
-            <ProgressBar
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="@dimen/progress_bar_size"
-                    android:layout_height="@dimen/progress_bar_size"
-                    android:id="@+id/progressBar"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!-- Loading panel -->
 
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/live_default_card"
@@ -80,6 +55,18 @@
                         app:layout_constraintTop_toBottomOf="@+id/live_image"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
+
+                <ImageView
+                        android:id="@+id/no_internet_image"
+                        android:src="@drawable/no_internet"
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:contentDescription="@string/no_internet_image"
+                        app:layout_constraintTop_toBottomOf="@+id/live_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

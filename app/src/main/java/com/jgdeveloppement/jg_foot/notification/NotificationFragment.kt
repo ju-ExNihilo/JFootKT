@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.FragmentNotificationBinding
 import com.jgdeveloppement.jg_foot.injection.Injection
@@ -82,7 +81,7 @@ class NotificationFragment : Fragment(), NotificationAdapter.OnNotificationClick
             if (it != null){
                 ReplyListActivity.navigate(activity, it, imageTransition, notification.commentId)
             }else{
-                showSnackBar(binding.notificationFragmentLayout, "Désolé le message à était supprimé")
+                showSnackBar(binding.notificationFragmentLayout, resources.getString(R.string.sorry_deleted_message))
             }
         })
     }

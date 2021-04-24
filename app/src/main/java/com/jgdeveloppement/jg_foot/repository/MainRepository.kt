@@ -1,15 +1,15 @@
 package com.jgdeveloppement.jg_foot.repository
 
-import android.util.Log
+import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firepush.Fire
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.messaging.FirebaseMessaging
+import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.models.*
 import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.commentRef
 import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.likedRef
@@ -18,7 +18,6 @@ import com.jgdeveloppement.jg_foot.repository.MainRepository.Singleton.userRef
 import com.jgdeveloppement.jg_foot.retrofit.ApiHelper
 import com.jgdeveloppement.jg_foot.retrofit.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.tasks.await
 import java.util.*
 
 class MainRepository(private val apiHelper: ApiHelper) {
@@ -58,7 +57,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
                 val notificationId = getNotificationReferenceId(fromComment.userId)
                 val notification = Notification(notificationId, comment.userName, comment.id, false, fromComment.id, false, Date())
                 addNotification(fromComment.userId, notification)
-                sendNotification(fromComment.userId, comment.userName, " à répondu à votre commentaire")
+                sendNotification(fromComment.userId, comment.userName, Resources.getSystem().getString(R.string.reply_notification))
             }
         }
     }
@@ -96,7 +95,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
                 } else{
                     deleteLiked(commentId, userId)
                     decrementLike(commentId)
-                    sendNotification(forId, userName, "à aimé votre commentaire")
+                    sendNotification(forId, userName, Resources.getSystem().getString(R.string.like_notification))
                 }
             }
         }
@@ -115,7 +114,7 @@ class MainRepository(private val apiHelper: ApiHelper) {
                     if (userId != forId) {
                         val notification = Notification(commentId, userName, commentId, true, "none", false, Date())
                         addNotification(forId, notification)
-                        sendNotification(forId, userName, "à aimé votre commentaire")
+                        sendNotification(forId, userName, Resources.getSystem().getString(R.string.like_notification))
                     }
                 } else{
                     deleteLiked(commentId, userId)
@@ -206,7 +205,6 @@ class MainRepository(private val apiHelper: ApiHelper) {
     fun getLiveNotificationCount(userId: String, callback: ()->Unit){
         notificationRef(userId).whereEqualTo("checked", false).addSnapshotListener { snapshots, error ->
                     if (error != null){
-                        Log.i("DEBUGGG", "listen:error", error)
                         return@addSnapshotListener
                     }
                     for (dc in snapshots!!.documentChanges) {

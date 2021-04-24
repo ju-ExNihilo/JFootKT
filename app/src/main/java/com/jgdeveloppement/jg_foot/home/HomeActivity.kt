@@ -1,10 +1,8 @@
 package com.jgdeveloppement.jg_foot.home
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -18,14 +16,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.badge.BadgeDrawable
 import com.firebase.ui.auth.AuthUI
 import com.firepush.Fire
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.ActivityHomeBinding
 import com.jgdeveloppement.jg_foot.injection.Injection
 import com.jgdeveloppement.jg_foot.login.LoginActivity
-import com.jgdeveloppement.jg_foot.notification.NotificationAdapter
 import com.jgdeveloppement.jg_foot.utils.Utils
 import com.jgdeveloppement.jg_foot.utils.Utils.hideKeyboard
 import com.jgdeveloppement.jg_foot.viewmodel.MainViewModel
@@ -44,7 +40,7 @@ class HomeActivity : AppCompatActivity(), MaterialSearchView.OnQueryTextListener
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Fire.init("AAAAbNfxLIA:APA91bEfDxF6kTCpMGnXSb1CooCgLL6cErx07qDq7hKe_sm2YN265Ldg_VMYcf6ewU_h7vSq0AYRSy_RulIZgPlfEGKxOLdgGNGSZYJJMAMfskE9eWl1axWyUxqjfB4In8scxDLEmKQA")
+        Fire.init(resources.getString(R.string.google_cloud_messaging_key))
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         setSupportActionBar(binding.toolbar)
         configureDrawerLayout()

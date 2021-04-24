@@ -99,8 +99,8 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         val serieA = matches.filter{ match -> match.competition.name.contentEquals(Utils.SERIE_A)}
 
         when(from){
-            Utils.TOP_MATCHES -> initLayout("Top Matchs", R.drawable.ic_top_match, topMatch)
-            Utils.ALL_MATCHES -> initLayout("Matchs", R.drawable.ball, matches)
+            Utils.TOP_MATCHES -> initLayout(resources.getString(R.string.top_matchs), R.drawable.ic_top_match, topMatch)
+            Utils.ALL_MATCHES -> initLayout(resources.getString(R.string.matchs), R.drawable.ball, matches)
             Utils.LIGUE_1 -> {
                 initLayout(setTitle(Utils.LIGUE_1), R.drawable.ic_ligue_1, ligue1)
                 initSelectedItem(0)
@@ -119,7 +119,7 @@ class MatchesFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
             }
             else -> {
                 val queryResult = matches.filter{ match -> match.title.contains(from!!, true)}
-                initLayout("Recherche", R.drawable.ic_ball, queryResult)
+                initLayout(resources.getString(R.string.search), R.drawable.ic_ball, queryResult)
             }
         }
 

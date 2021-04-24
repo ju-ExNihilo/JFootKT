@@ -7,7 +7,7 @@
     <!-- Progress Layout Card -->
 
     <!-- Material Card -->
-    <dimen name="default_card_min_height">750dp</dimen>
+    <dimen name="default_card_min_height">850dp</dimen>
     <dimen name="default_card_elevation">20dp</dimen>
     <dimen name="default_card_margin_top">8dp</dimen>
     <dimen name="login_card_margin_top">32dp</dimen>
@@ -15,16 +15,8 @@
     <!-- Material Card End -->
 
     <!-- Login Layout -->
-    <dimen name="login_button_height">70dp</dimen>
-    <dimen name="login_button_mail_margin_top">40dp</dimen>
-    <dimen name="login_button_horizontal_margin">32dp</dimen>
-    <dimen name="login_button_text_size">18sp</dimen>
-    <dimen name="login_button_radius">10dp</dimen>
-    <dimen name="login_button_elevation">10dp</dimen>
-    <dimen name="login_button_google_margin_top">16dp</dimen>
-    <dimen name="login_title_text_size">80sp</dimen>
-    <dimen name="login_title_horizontal_margin">24dp</dimen>
-    <dimen name="login_image_height">400dp</dimen>
+    <dimen name="login_button_text_size">24sp</dimen>
+    <dimen name="login_title_text_size">100sp</dimen>
     <!-- Login Layout End -->
 
     <!-- Home Layout -->
@@ -44,8 +36,10 @@
 
     <!-- Matches List Layout -->
     <dimen name="nothing_found_text_size">24sp</dimen>
-    <dimen name="match_item_list_width">130dp</dimen>
-    <dimen name="match_item_list_height">90dp</dimen>
+    <dimen name="match_item_list_width">170dp</dimen>
+    <dimen name="match_item_list_height">130dp</dimen>
+    <dimen name="match_item_list_width_land">200dp</dimen>
+    <dimen name="match_item_list_height_land">140dp</dimen>
     <!-- Matches List Layout End -->
 
     <!-- Matches Item Layout -->
@@ -66,11 +60,8 @@
     <!-- Nav Header/View Layout End -->
 
     <!-- Details Layout -->
-    <dimen name="details_title_text_size">18sp</dimen>
-    <dimen name="details_ball_image_view_size">30dp</dimen>
-    <dimen name="details_web_view_margin_top">24dp</dimen>
-    <dimen name="match_title_land_text_size">30sp</dimen>
-    <dimen name="message_title_text_size">24sp</dimen>
+    <dimen name="details_title_text_size">24sp</dimen>
+    <dimen name="match_title_land_text_size">36sp</dimen>
     <!-- Details Layout End -->
 
     <!-- Comment Item Layout -->
@@ -92,5 +83,12 @@
     <dimen name="comment_item_frame_layout_text_size">10sp</dimen>
     <dimen name="comment_item_message_margin">8dp</dimen>
     <!-- Comment Item Layout End -->
+
+    <!-- Bad Word Popup Layout -->
+    <dimen name="bad_word_popup_text_size">36sp</dimen>
+    <dimen name="bad_word_popup_default_height">500dp</dimen>
+    <dimen name="bad_word_popup_default_height_land">600dp</dimen>
+    <dimen name="bad_word_popup_text_size_land">24sp</dimen>
+    <!-- Bad Word Popup Layout End -->
 
 </resources>

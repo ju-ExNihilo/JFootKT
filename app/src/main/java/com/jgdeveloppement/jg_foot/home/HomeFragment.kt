@@ -1,25 +1,20 @@
 package com.jgdeveloppement.jg_foot.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
-
 import com.jgdeveloppement.jg_foot.R
 import com.jgdeveloppement.jg_foot.databinding.FragmentHomeBinding
 import com.jgdeveloppement.jg_foot.details.DetailsActivity
 import com.jgdeveloppement.jg_foot.injection.Injection
-import com.jgdeveloppement.jg_foot.models.User
 import com.jgdeveloppement.jg_foot.models.match.Match
 import com.jgdeveloppement.jg_foot.utils.Status
 import com.jgdeveloppement.jg_foot.utils.Utils
@@ -49,8 +44,6 @@ class HomeFragment : Fragment(), MatchAdapter.OnCardMatchClicked {
         navController = Navigation.findNavController(view)
         setupViewModel()
         initMatches()
-        val lengt = "un commentaire un peu long pour tester comment cela rend sur le layout je vais jute rajouter un peu plus de text"
-        Log.i("DEBUGGG", "lenght = ${lengt.length}")
 
         binding.topMatchNextButton.setOnClickListener { HomeActivity.navigateToMatchesList(TOP_MATCHES, navController) }
         binding.otherMatchNextButton.setOnClickListener { HomeActivity.navigateToMatchesList(ALL_MATCHES, navController) }
